@@ -1,0 +1,56 @@
+name: PlacesApp
+options:
+  bundleIdPrefix: com.places
+  deploymentTarget:
+    iOS: "15.0"
+  developmentLanguage: en
+  xcodeVersion: "14.0"
+
+targets:
+  PlacesApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: PlacesApp
+    resources:
+      - path: Assets.xcassets
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.places.app
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.7"
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+      INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+      INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+      INFOPLIST_KEY_UILaunchScreen_Generation: YES
+      INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+      INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+
+  PlacesAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: PlacesAppTests
+    dependencies:
+      - target: PlacesApp
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.places.appTests
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.7"
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+
+  PlacesAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: PlacesAppUITests
+    dependencies:
+      - target: PlacesApp
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.places.appUITests
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.7"
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+
