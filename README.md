@@ -1,6 +1,6 @@
 # Wikipedia Places Integration
 
-This repository contains two iOS projects that work together to show deep linking between apps.
+This monorepo contains two iOS projects that work together to show deep linking between apps.
 
 ## What's Here
 
@@ -10,6 +10,25 @@ This repository contains two iOS projects that work together to show deep linkin
 ## The Assignment
 
 The goal was to modify the Wikipedia iOS app so it can be opened directly to the Places tab showing a specific location (via coordinates), instead of always showing the current location.
+
+## Setup
+
+This project contains a Git submodule. Make sure you clone the repository using:
+
+```bash
+git clone --recurse-submodules https://github.com/gizemdayioglu/wikipedia-places-integration.git
+```
+
+### Setup Wikipedia iOS App
+
+Wikipedia requires additional setup before running:
+
+```bash
+cd wikipedia-places-integration/wikipedia-ios
+./scripts/setup
+```
+
+This installs dependencies and configures the project.
 
 ## Quick Start
 
