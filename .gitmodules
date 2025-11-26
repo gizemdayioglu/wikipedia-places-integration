@@ -1,0 +1,4 @@
+[submodule "wikipedia-ios"]
+	path = wikipedia-ios
+	url = https://github.com/gizemdayioglu/wikipedia-ios.git
+	branch = feature/places-deep-linking
