@@ -8,6 +8,8 @@ final class PlacesViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var customLatitude: String = ""
     @Published var customLongitude: String = ""
+    @Published var customLocation: Place?
+    @Published var shouldShowCustomLocationOnMap = false
     
     private let getLocationsUseCase: GetLocationsUseCase
     
@@ -44,5 +46,42 @@ final class PlacesViewModel: ObservableObject {
             return false
         }
         return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180
+    }
+    
+    func createCustomLocation() -> Place? {
+        guard let lat = Double(customLatitude),
+              let lon = Double(customLongitude),
+              isCustomLocationValid else {
+            return nil
+        }
+        
+        return Place(
+            id: "custom-\(lat),\(lon)",
+            name: "Custom Location",
+            latitude: lat,
+            longitude: lon,
+            description: "Custom coordinates"
+        )
+    }
+    
+    func showCustomLocationOnMap() {
+        guard let location = createCustomLocation() else { return }
+        customLocation = location
+        shouldShowCustomLocationOnMap = true
+    }
+    
+    func clearCustomLocation() {
+        customLocation = nil
+        shouldShowCustomLocationOnMap = false
+        customLatitude = ""
+        customLongitude = ""
+    }
+    
+    var allPlaces: [Place] {
+        var result = places
+        if let customLocation = customLocation {
+            result.append(customLocation)
+        }
+        return result
     }
 }

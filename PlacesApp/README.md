@@ -4,10 +4,14 @@ A demo app that opens the Wikipedia iOS app's Places tab with custom coordinates
 
 ## Features
 
-- Fetches locations from a remote JSON enfiledpoint
+- Fetches locations from a remote JSON endpoint
+- **Map and List views** with toggle between them (map view by default)
 - Opens Wikipedia app's Places tab with coordinates when tapping a location
-- Allows entering custom latitude/longitude coordinates
-- SwiftUI with accessibility support
+- Allows entering custom latitude/longitude coordinates that appear in both map and list views
+- Card-style UI design with modern iOS styling
+- Empty state handling with helpful messages
+- Pull-to-refresh support
+- SwiftUI with full accessibility support
 - Uses async/await for network operations
 - Unit tests for ViewModels and UseCases
 - UI tests for main user flows
@@ -35,11 +39,14 @@ PlacesApp/
 │   └── Repositories/
 │       └── PlacesRepository.swift
 └── Presentation/
+    ├── Theme.swift
     ├── ViewModels/
     │   └── PlacesViewModel.swift
     └── Views/
         ├── PlacesListView.swift
+        ├── PlacesMapView.swift
         ├── PlaceRowView.swift
+        ├── EmptyStateView.swift
         └── CustomLocationView.swift
 ```
 
@@ -59,6 +66,19 @@ PlacesApp/
 
 The app fetches locations from:
 `https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json`
+
+## User Interface
+
+The app features a modern, clean UI with:
+
+- **Map View** (default): Interactive map showing all locations as pins, including custom locations. Tap any pin to open Wikipedia.
+- **List View**: Card-style list of locations with location icons and coordinates. Custom locations appear at the end of the list.
+- **Toggle Bar**: Segmented control at the top to switch between Map and List views.
+- **Custom Location**: Enter coordinates to add a custom location that appears in both map and list views.
+- **Empty State**: Friendly message when no locations are available.
+- **Pull-to-Refresh**: Swipe down to reload locations.
+- **Card Design**: Modern card-style rows with shadows and rounded corners.
+- **Consistent Theme**: Centralized color scheme for maintainability.
 
 ## Deep Linking
 
@@ -86,7 +106,7 @@ Examples:
 ### Unit Tests
 
 Test coverage includes:
-- `PlacesViewModelTests`: ViewModel logic, validation, and edge cases
+- `PlacesViewModelTests`: ViewModel logic, validation, edge cases, custom location creation, and data consistency between map/list views
 - `GetLocationsUseCaseTests`: Use case execution and error handling
 - `PlaceModelTests`: Model properties, URL generation, and decoding
 - `WikipediaURLBuilderTests`: URL building with valid and invalid coordinates
@@ -103,8 +123,11 @@ Run UI tests by selecting the PlacesApp scheme and pressing `Cmd+U` (runs both u
 
 UI tests cover:
 - Places list loading
-- Tapping locations
-- Custom location input flow
+- Map and list view toggling
+- Pull-to-refresh functionality
+- Tapping locations (both map pins and list items)
+- Custom location input and validation
+- Showing custom locations in both map and list views
 
 ## Wikipedia App Changes
 
@@ -125,9 +148,21 @@ The app uses modern Swift Concurrency:
 
 The app supports iOS 15.0 and later, including iOS 15, 16, and 17. All features work across these versions without any version-specific code.
 
+## UI Design
+
+The app uses a clean, modern design with:
+- Card-style rows with subtle shadows
+- Consistent color theme (blue accent)
+- Empty states for better UX
+- Native iOS segmented control for view switching
+- Full accessibility support with VoiceOver labels
+
 ## Notes
 
-- Coordinates are validated
+- Coordinates are validated (latitude: -90 to 90, longitude: -180 to 180)
+- Custom locations are automatically shown in both map and list views for consistency
 - The app handles network errors gracefully
-- Accessibility labels are included
+- Full accessibility support with VoiceOver labels
 - JSON supports locations with or without names
+- Map view uses MapKit with efficient annotation handling
+- List view uses lazy loading for performance

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,9 @@
 		BDB01F799FE6A84D7E12F612 /* PlaceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068110A6A51FED6FB37CED7C /* PlaceRowView.swift */; };
 		C9C0149F1B7D2C8004BC534A /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7050697230D3580563915994 /* DependencyContainer.swift */; };
 		E422A5638A037A4A1BE6BFF2 /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F0311AAD07C379AB3B097 /* PlacesViewModel.swift */; };
+		E944AA5B2ED4E77C0013065A /* PlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5A2ED4E77C0013065A /* PlacesMapView.swift */; };
+		E944AA5D2ED4F2960013065A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5C2ED4F2960013065A /* Theme.swift */; };
+		E944AA5F2ED4F2C60013065A /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5E2ED4F2C60013065A /* EmptyStateView.swift */; };
 		F7148E71555330BC4AEF8124 /* CustomLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B1241E0DA8352E0957B5DA /* CustomLocationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +76,9 @@
 		A8993ED050AD00E983471DFB /* WikipediaURLBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaURLBuilderTests.swift; sourceTree = "<group>"; };
 		D61324FFDFD40A52D934B70D /* PlacesAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAppUITests.swift; sourceTree = "<group>"; };
 		DA9C41B3262920D255B500D2 /* PlacesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModelTests.swift; sourceTree = "<group>"; };
+		E944AA5A2ED4E77C0013065A /* PlacesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesMapView.swift; sourceTree = "<group>"; };
+		E944AA5C2ED4F2960013065A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		E944AA5E2ED4F2C60013065A /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		F39F0311AAD07C379AB3B097 /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +105,7 @@
 		26233CA0A77AAEF3882BFCF5 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E944AA5C2ED4F2960013065A /* Theme.swift */,
 				838C2C2E4ACE2EB530AB2603 /* ViewModels */,
 				686FA18F906267D75FE23976 /* Views */,
 			);
@@ -144,6 +151,8 @@
 		686FA18F906267D75FE23976 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E944AA5E2ED4F2C60013065A /* EmptyStateView.swift */,
+				E944AA5A2ED4E77C0013065A /* PlacesMapView.swift */,
 				22B1241E0DA8352E0957B5DA /* CustomLocationView.swift */,
 				068110A6A51FED6FB37CED7C /* PlaceRowView.swift */,
 				97D77E7BD1695FCB5BE8A2B0 /* PlacesListView.swift */,
@@ -316,7 +325,6 @@
 			);
 			mainGroup = 9F5C1926A8352CD719EF98BB;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -357,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7148E71555330BC4AEF8124 /* CustomLocationView.swift in Sources */,
+				E944AA5B2ED4E77C0013065A /* PlacesMapView.swift in Sources */,
 				C9C0149F1B7D2C8004BC534A /* DependencyContainer.swift in Sources */,
 				0B9C939C75E1C68192274892 /* GetLocationsUseCase.swift in Sources */,
 				BB58CAFBB0580725552C4AD5 /* Place.swift in Sources */,
@@ -367,7 +376,9 @@
 				4D79CDB1CE6FFB87DC9A5467 /* PlacesRepository.swift in Sources */,
 				44836046C12E9EAEA09463E1 /* PlacesRepositoryProtocol.swift in Sources */,
 				E422A5638A037A4A1BE6BFF2 /* PlacesViewModel.swift in Sources */,
+				E944AA5F2ED4F2C60013065A /* EmptyStateView.swift in Sources */,
 				2F4253B00AC5C4140AC9C91B /* WikipediaURLBuilder.swift in Sources */,
+				E944AA5D2ED4F2960013065A /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,8 @@ struct CustomLocationView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Enter Coordinates")) {
+                Section(header: Text("Enter Coordinates")
+                    .accessibilityLabel("Enter Coordinates section")) {
                     TextField("Latitude (-90 to 90)", text: $viewModel.customLatitude)
                         .keyboardType(.decimalPad)
                         .accessibilityLabel("Latitude")
@@ -24,19 +25,19 @@ struct CustomLocationView: View {
                 
                 Section {
                     Button {
-                        openWikipediaWithCustomLocation()
+                        showOnMap()
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Open in Wikipedia")
+                            Text("Show Location")
                                 .fontWeight(.semibold)
                             Spacer()
                         }
                     }
                     .disabled(!viewModel.isCustomLocationValid)
-                    .accessibilityIdentifier("OpenWikipediaButton")
+                    .accessibilityIdentifier("ShowLocationButton")
                     .accessibilityHint(viewModel.isCustomLocationValid
-                                       ? "Opens Wikipedia app with the entered coordinates"
+                                       ? "Shows the location on the map and in the list"
                                        : "Enter valid latitude and longitude to enable")
                 }
             }
@@ -54,23 +55,20 @@ struct CustomLocationView: View {
                 Button("OK") {
                     errorMessage = nil
                 }
+                .accessibilityIdentifier("CustomLocationErrorAlertOKButton")
             } message: {
                 if let msg = errorMessage {
                     Text(msg)
                 }
             }
+            .onAppear {
+                viewModel.clearCustomLocation()
+            }
         }
     }
     
-    private func openWikipediaWithCustomLocation() {
-        guard let url = viewModel.openWikipediaWithCustomLocation() else { return }
-        
-        UIApplication.shared.open(url) { success in
-            if success {
-                dismiss()
-            } else {
-                errorMessage = "Wikipedia app is not installed. Please install and run the Wikipedia app first."
-            }
-        }
+    private func showOnMap() {
+        viewModel.showCustomLocationOnMap()
+        dismiss()
     }
 }
