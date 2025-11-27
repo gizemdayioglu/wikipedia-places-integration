@@ -1,7 +1,7 @@
 import XCTest
 @testable import PlacesApp
 
-final class AccessibilityTests: XCTestCase {
+final class PlaceAccessibilityTests: XCTestCase {
     
     func testPlace_AccessibilityText_WithName() {
         let place = Place(
@@ -13,14 +13,15 @@ final class AccessibilityTests: XCTestCase {
         )
         
         let view = PlaceRowView(place: place)
-        let accessibilityText = view.accessibilityText
+        let accessibilityLabel = view.rowAccessibilityLabel
+        let accessibilityValue = view.rowAccessibilityValue
         
-        XCTAssertTrue(accessibilityText.contains("Amsterdam"))
-        XCTAssertTrue(accessibilityText.contains("Capital of Netherlands"))
-        XCTAssertTrue(accessibilityText.contains("latitude"))
-        XCTAssertTrue(accessibilityText.contains("longitude"))
-        XCTAssertTrue(accessibilityText.contains("52.3676"))
-        XCTAssertTrue(accessibilityText.contains("4.9041"))
+        XCTAssertTrue(accessibilityLabel.contains("Amsterdam"))
+        XCTAssertTrue(accessibilityValue.contains("Capital of Netherlands"))
+        XCTAssertTrue(accessibilityValue.contains("Latitude"))
+        XCTAssertTrue(accessibilityValue.contains("Longitude"))
+        XCTAssertTrue(accessibilityValue.contains("52.37"))
+        XCTAssertTrue(accessibilityValue.contains("4.90"))
     }
     
     func testPlace_AccessibilityText_WithoutName() {
@@ -32,12 +33,12 @@ final class AccessibilityTests: XCTestCase {
         )
         
         let view = PlaceRowView(place: place)
-        let accessibilityText = view.accessibilityText
+        let accessibilityValue = view.rowAccessibilityValue
         
-        XCTAssertTrue(accessibilityText.contains("40.44"))
-        XCTAssertTrue(accessibilityText.contains("-3.75"))
-        XCTAssertTrue(accessibilityText.contains("latitude"))
-        XCTAssertTrue(accessibilityText.contains("longitude"))
+        XCTAssertTrue(accessibilityValue.contains("40.44"))
+        XCTAssertTrue(accessibilityValue.contains("-3.75"))
+        XCTAssertTrue(accessibilityValue.contains("Latitude"))
+        XCTAssertTrue(accessibilityValue.contains("Longitude"))
     }
     
     func testPlace_AccessibilityText_WithoutDescription() {
@@ -50,11 +51,12 @@ final class AccessibilityTests: XCTestCase {
         )
         
         let view = PlaceRowView(place: place)
-        let accessibilityText = view.accessibilityText
+        let accessibilityLabel = view.rowAccessibilityLabel
+        let accessibilityValue = view.rowAccessibilityValue
         
-        XCTAssertTrue(accessibilityText.contains("London"))
-        XCTAssertTrue(accessibilityText.contains("latitude"))
-        XCTAssertTrue(accessibilityText.contains("longitude"))
+        XCTAssertTrue(accessibilityLabel.contains("London"))
+        XCTAssertTrue(accessibilityValue.contains("Latitude"))
+        XCTAssertTrue(accessibilityValue.contains("Longitude"))
     }
     
     func testPlace_DisplayName_Accessibility() {
@@ -117,24 +119,10 @@ final class AccessibilityTests: XCTestCase {
         )
         
         let view = PlaceRowView(place: place)
-        let text = view.accessibilityText
+        let text = view.rowAccessibilityValue
         
-        XCTAssertTrue(text.hasPrefix("Test"))
         XCTAssertTrue(text.contains("Description"))
-        XCTAssertTrue(text.contains("latitude 52.3676"))
-        XCTAssertTrue(text.contains("longitude 4.9041"))
-    }
-}
-
-extension PlaceRowView {
-    var accessibilityText: String {
-        var text = place.displayName
-        
-        if let desc = place.description {
-            text += ", \(desc)"
-        }
-        
-        text += ", latitude \(place.latitude), longitude \(place.longitude)"
-        return text
+        XCTAssertTrue(text.contains("Latitude 52.37"))
+        XCTAssertTrue(text.contains("Longitude 4.90"))
     }
 }

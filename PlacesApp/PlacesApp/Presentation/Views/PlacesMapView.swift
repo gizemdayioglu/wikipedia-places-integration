@@ -10,6 +10,8 @@ struct PlacesMapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = false
+        mapView.isAccessibilityElement = false
+        mapView.accessibilityTraits.insert(.allowsDirectInteraction)
         return mapView
     }
     
@@ -23,7 +25,7 @@ struct PlacesMapView: UIViewRepresentable {
         
         let annotations = allPlaces.map { PlaceAnnotation(place: $0) }
         mapView.addAnnotations(annotations)
-        
+        mapView.accessibilityValue = "\(allPlaces.count) locations"
         if !allPlaces.isEmpty {
             let region = calculateRegion(for: allPlaces)
             mapView.setRegion(region, animated: true)
@@ -76,6 +78,23 @@ struct PlacesMapView: UIViewRepresentable {
             onPlaceTapped(annotation.place)
             mapView.deselectAnnotation(annotation, animated: true)
         }
+    
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard let placeAnnotation = annotation as? PlaceAnnotation else { return nil }
+
+            let identifier = "PlaceAnnotationView"
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+                ?? MKMarkerAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
+
+            annotationView.annotation = placeAnnotation
+            annotationView.isAccessibilityElement = true
+            annotationView.canShowCallout = false
+            annotationView.accessibilityLabel = placeAnnotation.place.displayName
+            annotationView.accessibilityHint = "Opens Wikipedia at this location"
+            annotationView.accessibilityTraits.insert(.button)
+    
+            return annotationView
+        }
     }
 }
 
@@ -99,3 +118,4 @@ class PlaceAnnotation: NSObject, MKAnnotation {
         super.init()
     }
 }
+

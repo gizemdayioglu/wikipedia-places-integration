@@ -14,8 +14,9 @@ struct EmptyStateView: View {
                 .foregroundColor(.primary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("No places found.")
+        .accessibilityAddTraits(.isStaticText)
     }
 }
 

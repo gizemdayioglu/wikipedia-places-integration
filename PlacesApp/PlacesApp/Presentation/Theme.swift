@@ -11,6 +11,7 @@ struct AppTheme {
     static let cardShadow = Color.black.opacity(0.05)
     
     /// Secondary text color
-    static let secondaryText = Color.secondary
+    static let secondaryText = Color.primary.opacity(0.75)
+
 }
 

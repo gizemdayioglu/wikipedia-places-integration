@@ -9,6 +9,7 @@ struct PlacesListView: View {
     @EnvironmentObject var viewModel: PlacesViewModel
     @State private var showCustomLocation = false
     @State private var viewMode: ViewMode = .map
+    @State private var showError = false
     
     var body: some View {
         NavigationView {
@@ -25,12 +26,14 @@ struct PlacesListView: View {
                 .background(Color(.systemBackground))
                 .accessibilityLabel("View mode selector")
                 .accessibilityIdentifier("ViewModeSelector")
+                .accessibilityHint("Switch between map and list view")
                 
                 if viewModel.isLoading {
                     ProgressView("Loading places...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityLabel("Loading places")
                         .accessibilityIdentifier("LoadingProgressView")
+                        .accessibilityValue("Loading")
                 } else if viewMode == .map {
                     PlacesMapView(
                         places: viewModel.places,
@@ -45,20 +48,22 @@ struct PlacesListView: View {
                     EmptyStateView()
                 } else {
                     List(viewModel.allPlaces) { place in
-                        PlaceRowView(place: place)
-                            .listRowSeparator(.hidden)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                openWikipedia(for: place)
-                            }
-                            .accessibilityAddTraits(.isButton)
-                            .accessibilityHint("Opens Wikipedia at this location")
+                        PlaceRowView(place: place) {
+                            openWikipedia(for: place)
+                        }
+                        .listRowSeparator(.hidden)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            openWikipedia(for: place)
+                        }
+                        .accessibilityHint("Opens Wikipedia at this location")
                     }
                     .listStyle(.plain)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .navigationTitle("Places")
+            .accessibilityAddTraits(.isHeader)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -66,6 +71,7 @@ struct PlacesListView: View {
                     } label: {
                         Image(systemName: "plus.circle")
                             .accessibilityLabel("Add custom location")
+                            .accessibilityHint("Opens a form to enter coordinates")
                     }
                     .accessibilityIdentifier("AddCustomLocationButton")
                 }
@@ -74,12 +80,13 @@ struct PlacesListView: View {
                 CustomLocationView()
                     .environmentObject(viewModel)
             }
-            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
+            .alert("Error", isPresented: $showError, presenting: viewModel.errorMessage) { _ in
                 Button("OK") {
+                    showError = false
                     viewModel.errorMessage = nil
                 }
                 .accessibilityIdentifier("ErrorAlertOKButton")
-            } message: {
+            } message: {_ in 
                 if let msg = viewModel.errorMessage {
                     Text(msg)
                 }
@@ -104,6 +111,7 @@ struct PlacesListView: View {
         UIApplication.shared.open(url) { success in
             if !success {
                 viewModel.errorMessage = "Wikipedia app is not installed. Please install and run the Wikipedia app first."
+                   showError = true
             }
         }
     }

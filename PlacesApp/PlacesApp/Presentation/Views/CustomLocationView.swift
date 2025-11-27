@@ -9,7 +9,8 @@ struct CustomLocationView: View {
         NavigationView {
             Form {
                 Section(header: Text("Enter Coordinates")
-                    .accessibilityLabel("Enter Coordinates section")) {
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityHint("Enter the latitude and longitude")) {
                     TextField("Latitude (-90 to 90)", text: $viewModel.customLatitude)
                         .keyboardType(.decimalPad)
                         .accessibilityLabel("Latitude")
@@ -49,16 +50,8 @@ struct CustomLocationView: View {
                         dismiss()
                     }
                     .accessibilityIdentifier("DoneButton")
-                }
-            }
-            .alert("Error", isPresented: .constant(errorMessage != nil)) {
-                Button("OK") {
-                    errorMessage = nil
-                }
-                .accessibilityIdentifier("CustomLocationErrorAlertOKButton")
-            } message: {
-                if let msg = errorMessage {
-                    Text(msg)
+                    .accessibilityLabel("Done")
+                    .accessibilityHint("Close this screen")
                 }
             }
             .onAppear {
