@@ -42,6 +42,27 @@ struct Place: Identifiable, Codable, Equatable {
     var wikipediaDeepLinkURL: URL? {
         WikipediaURLBuilder.makePlacesURL(lat: latitude, lon: longitude)
     }
+
+    func formattedLatitude(decimalPlaces: Int = 2) -> String {
+        String(format: "%.\(decimalPlaces)f", latitude)
+    }
+    
+    func formattedLongitude(decimalPlaces: Int = 2) -> String {
+        String(format: "%.\(decimalPlaces)f", longitude)
+    }
+    
+    var accessibilityValue: String {
+        var parts: [String] = []
+        
+        if let desc = description {
+            parts.append(desc)
+        }
+        
+        parts.append("Latitude \(formattedLatitude())")
+        parts.append("Longitude \(formattedLongitude())")
+        
+        return parts.joined(separator: ", ")
+    }
 }
 
 struct PlacesResponse: Codable {
