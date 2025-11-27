@@ -2,8 +2,7 @@ import Foundation
 
 struct WikipediaURLBuilder {
     static func makePlacesURL(lat: Double, lon: Double) -> URL? {
-        guard lat >= -90, lat <= 90,
-              lon >= -180, lon <= 180 else {
+        guard CoordinateValidator.isValid(latitude: lat, longitude: lon) else {
             return nil
         }
         

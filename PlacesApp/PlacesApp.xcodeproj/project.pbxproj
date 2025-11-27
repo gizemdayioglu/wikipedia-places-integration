@@ -31,6 +31,11 @@
 		E944AA5B2ED4E77C0013065A /* PlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5A2ED4E77C0013065A /* PlacesMapView.swift */; };
 		E944AA5D2ED4F2960013065A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5C2ED4F2960013065A /* Theme.swift */; };
 		E944AA5F2ED4F2C60013065A /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944AA5E2ED4F2C60013065A /* EmptyStateView.swift */; };
+		E9ABF7E92ED89752009414C4 /* CreateCustomLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABF7E82ED89752009414C4 /* CreateCustomLocationUseCase.swift */; };
+		E9ABF7EB2ED89776009414C4 /* CoordinateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABF7EA2ED89776009414C4 /* CoordinateValidator.swift */; };
+		E9ABF7ED2ED899AE009414C4 /* MapRegionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABF7EC2ED899AE009414C4 /* MapRegionCalculator.swift */; };
+		E9ABF7F02ED89C3C009414C4 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABF7EE2ED89C3C009414C4 /* ErrorMessages.swift */; };
+		E9ABF7F22ED89DDD009414C4 /* CreateCustomLocationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABF7F12ED89DDD009414C4 /* CreateCustomLocationUseCaseTests.swift */; };
 		F7148E71555330BC4AEF8124 /* CustomLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B1241E0DA8352E0957B5DA /* CustomLocationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +84,11 @@
 		E944AA5A2ED4E77C0013065A /* PlacesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesMapView.swift; sourceTree = "<group>"; };
 		E944AA5C2ED4F2960013065A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		E944AA5E2ED4F2C60013065A /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		E9ABF7E82ED89752009414C4 /* CreateCustomLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCustomLocationUseCase.swift; sourceTree = "<group>"; };
+		E9ABF7EA2ED89776009414C4 /* CoordinateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateValidator.swift; sourceTree = "<group>"; };
+		E9ABF7EC2ED899AE009414C4 /* MapRegionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionCalculator.swift; sourceTree = "<group>"; };
+		E9ABF7EE2ED89C3C009414C4 /* ErrorMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
+		E9ABF7F12ED89DDD009414C4 /* CreateCustomLocationUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCustomLocationUseCaseTests.swift; sourceTree = "<group>"; };
 		F39F0311AAD07C379AB3B097 /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +96,7 @@
 		0DF9A4D445C0E663C394CD1B /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				E9ABF7EF2ED89C3C009414C4 /* Constants */,
 				77FFB7CCA8ADAF021F4DE083 /* Models */,
 				9D4593BA6220139AFBE16E05 /* Protocols */,
 				8D147D3B618DB9573665E098 /* UseCases */,
@@ -123,6 +134,7 @@
 		36DD257EB28A427789044F05 /* PlacesAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				E9ABF7F12ED89DDD009414C4 /* CreateCustomLocationUseCaseTests.swift */,
 				08F2B4045C2E3EA5CD5CA062 /* PlaceAccessibilityTests.swift */,
 				22CABC61F129748294B51D07 /* GetLocationsUseCaseTests.swift */,
 				7E0891CE992A096076EE0AF9 /* NetworkErrorTests.swift */,
@@ -163,6 +175,8 @@
 		7382B0B21076920B6B21A641 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E9ABF7EC2ED899AE009414C4 /* MapRegionCalculator.swift */,
+				E9ABF7EA2ED89776009414C4 /* CoordinateValidator.swift */,
 				65EA55487F95932753E5DFA9 /* WikipediaURLBuilder.swift */,
 			);
 			path = Utils;
@@ -187,6 +201,7 @@
 		8D147D3B618DB9573665E098 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				E9ABF7E82ED89752009414C4 /* CreateCustomLocationUseCase.swift */,
 				A767847B8E12CAB2F35F2EBE /* GetLocationsUseCase.swift */,
 			);
 			path = UseCases;
@@ -217,6 +232,14 @@
 				F3CF864DCA0DFBE8F6FC3127 /* PlacesAppUITests */,
 				F6325E652301BF6FAE7F11FB /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		E9ABF7EF2ED89C3C009414C4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E9ABF7EE2ED89C3C009414C4 /* ErrorMessages.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		EEE5B7022B08DCD688F62520 /* Repositories */ = {
@@ -353,6 +376,7 @@
 				B64A4F10E6753046BD8D1F6A /* NetworkErrorTests.swift in Sources */,
 				685CDAACACD94385AB154E91 /* PlaceDecodingTests.swift in Sources */,
 				60A1F78975E5E9539193ECAD /* PlaceModelTests.swift in Sources */,
+				E9ABF7F22ED89DDD009414C4 /* CreateCustomLocationUseCaseTests.swift in Sources */,
 				26202B3D978FA7CDD4ECA19D /* PlacesNetworkServiceTests.swift in Sources */,
 				98AFFC4CF89D17685DFFF45D /* PlacesRepositoryTests.swift in Sources */,
 				B97390017BCFE0A2CFB0EE83 /* PlacesViewModelTests.swift in Sources */,
@@ -364,13 +388,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9ABF7F02ED89C3C009414C4 /* ErrorMessages.swift in Sources */,
 				F7148E71555330BC4AEF8124 /* CustomLocationView.swift in Sources */,
 				E944AA5B2ED4E77C0013065A /* PlacesMapView.swift in Sources */,
 				C9C0149F1B7D2C8004BC534A /* DependencyContainer.swift in Sources */,
 				0B9C939C75E1C68192274892 /* GetLocationsUseCase.swift in Sources */,
 				BB58CAFBB0580725552C4AD5 /* Place.swift in Sources */,
+				E9ABF7EB2ED89776009414C4 /* CoordinateValidator.swift in Sources */,
+				E9ABF7ED2ED899AE009414C4 /* MapRegionCalculator.swift in Sources */,
 				BDB01F799FE6A84D7E12F612 /* PlaceRowView.swift in Sources */,
 				729054DEE31F299D95124327 /* PlacesAppApp.swift in Sources */,
+				E9ABF7E92ED89752009414C4 /* CreateCustomLocationUseCase.swift in Sources */,
 				13D94790D30C8E0B9CE76504 /* PlacesListView.swift in Sources */,
 				3C434D88F48258ECF73395B8 /* PlacesNetworkService.swift in Sources */,
 				4D79CDB1CE6FFB87DC9A5467 /* PlacesRepository.swift in Sources */,
