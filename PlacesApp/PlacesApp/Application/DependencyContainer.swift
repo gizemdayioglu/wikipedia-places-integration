@@ -1,6 +1,5 @@
 import Foundation
 
-@MainActor
 final class DependencyContainer {
     static let shared = DependencyContainer()
     
@@ -22,6 +21,7 @@ final class DependencyContainer {
         CreateCustomLocationUseCase()
     }()
     
+    @MainActor
     lazy var placesViewModel: PlacesViewModel = {
         PlacesViewModel(
             getLocationsUseCase: getLocationsUseCase,
