@@ -1,6 +1,10 @@
 import Foundation
 
-final class DependencyContainer {
+protocol DependencyContainerProtocol {
+    @MainActor var placesViewModel: PlacesViewModel { get }
+}
+
+final class DependencyContainer: DependencyContainerProtocol {
     static let shared = DependencyContainer()
     
     private let baseURL = "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json"

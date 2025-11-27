@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct PlacesAppApp: App {
-    private let container = DependencyContainer.shared
+    private let container: DependencyContainerProtocol = DependencyContainer.shared
     
     var body: some Scene {
         WindowGroup {
