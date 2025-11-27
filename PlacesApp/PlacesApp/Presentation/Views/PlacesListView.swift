@@ -14,66 +14,13 @@ struct PlacesListView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Segmented control toggle bar
-                Picker("View Mode", selection: $viewMode) {
-                    ForEach(ViewMode.allCases, id: \.self) { mode in
-                        Text(mode.rawValue).tag(mode)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color(.systemBackground))
-                .accessibilityLabel("View mode selector")
-                .accessibilityIdentifier("ViewModeSelector")
-                .accessibilityHint("Switch between map and list view")
-                
-                if viewModel.isLoading {
-                    ProgressView("Loading places...")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .accessibilityLabel("Loading places")
-                        .accessibilityIdentifier("LoadingProgressView")
-                        .accessibilityValue("Loading")
-                } else if viewMode == .map {
-                    PlacesMapView(
-                        places: viewModel.places,
-                        customLocation: viewModel.customLocation
-                    ) { place in
-                        openWikipedia(for: place)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .accessibilityLabel("Map showing locations")
-                    .accessibilityIdentifier("PlacesMapView")
-                } else if viewModel.allPlaces.isEmpty {
-                    EmptyStateView()
-                } else {
-                    List(viewModel.allPlaces) { place in
-                        PlaceRowView(place: place) {
-                            openWikipedia(for: place)
-                        }
-                        .listRowSeparator(.hidden)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            openWikipedia(for: place)
-                        }
-                    }
-                    .listStyle(.plain)
-                    .accessibilityLabel("List of \(viewModel.allPlaces.count) locations")
-                }
+                viewModeSelector
+                contentView
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .navigationTitle("Places")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showCustomLocation = true
-                    } label: {
-                        Image(systemName: "plus.circle")
-                            .accessibilityLabel("Add custom location")
-                            .accessibilityHint("Opens a form to enter coordinates")
-                    }
-                    .accessibilityIdentifier("AddCustomLocationButton")
-                }
+                addCustomLocationButton
             }
             .sheet(isPresented: $showCustomLocation) {
                 CustomLocationView()
@@ -85,7 +32,7 @@ struct PlacesListView: View {
                     viewModel.errorMessage = nil
                 }
                 .accessibilityIdentifier("ErrorAlertOKButton")
-            } message: {_ in 
+            } message: { _ in
                 if let msg = viewModel.errorMessage {
                     Text(msg)
                 }
@@ -104,9 +51,93 @@ struct PlacesListView: View {
             }
         }
     }
+}
+
+private extension PlacesListView {
+    @ViewBuilder
+    var contentView: some View {
+        if viewModel.isLoading {
+            loadingView
+        } else if viewModel.allPlaces.isEmpty {
+            emptyView
+        } else if viewMode == .map {
+            mapView
+        } else {
+            listView
+        }
+    }
+}
+
+private extension PlacesListView {
     
-    private func openWikipedia(for place: Place) {
+    var viewModeSelector: some View {
+        Picker("View Mode", selection: $viewMode) {
+            ForEach(ViewMode.allCases, id: \.self) { mode in
+                Text(mode.rawValue).tag(mode)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(Color(.systemBackground))
+        .accessibilityLabel("View mode selector")
+        .accessibilityIdentifier("ViewModeSelector")
+        .accessibilityHint("Switch between map and list view")
+    }
+    
+    var loadingView: some View {
+        ProgressView("Loading places...")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityIdentifier("LoadingProgressView")
+    }
+    
+    var emptyView: some View {
+        EmptyStateView()
+            .accessibilityIdentifier("EmptyStateView")
+    }
+    
+    var mapView: some View {
+        PlacesMapView(
+            places: viewModel.places,
+            customLocation: viewModel.customLocation
+        ) { place in
+            openWikipedia(for: place)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityIdentifier("PlacesMapView")
+    }
+    
+    var listView: some View {
+        List(viewModel.allPlaces) { place in
+            PlaceRowView(place: place) {
+                openWikipedia(for: place)
+            }
+            .listRowSeparator(.hidden)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                openWikipedia(for: place)
+            }
+        }
+        .listStyle(.plain)
+        .accessibilityLabel("\(viewModel.allPlaces.count) locations")
+    }
+    
+    var addCustomLocationButton: some View {
+        Button {
+            showCustomLocation = true
+        } label: {
+            Image(systemName: "plus.circle")
+                .accessibilityLabel("Add custom location")
+                .accessibilityHint("Opens a form to enter coordinates")
+        }
+        .accessibilityIdentifier("AddCustomLocationButton")
+    }
+}
+
+private extension PlacesListView {
+    func openWikipedia(for place: Place) {
         guard let url = place.wikipediaDeepLinkURL else { return }
+        
         UIApplication.shared.open(url) { success in
             if !success {
                 viewModel.errorMessage = ErrorMessages.wikipediaAppNotInstalled
