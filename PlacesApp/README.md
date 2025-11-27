@@ -23,32 +23,44 @@ The app follows Clean Architecture with clear layer:
 ```
 PlacesApp/
 ├── Application/
-│   └── DependencyContainer.swift
+│   └── DependencyContainer.swift          # Dependency injection container
 ├── Domain/
 │   ├── Models/
-│   │   └── Place.swift
+│   │   └── Place.swift                    # Domain model with formatting methods
+│   ├── Constants/
+│   │   └── ErrorMessages.swift            # Centralized error messages
 │   ├── Utils/
-│   │   └── WikipediaURLBuilder.swift
+│   │   ├── CoordinateValidator.swift      # Coordinate validation logic
+│   │   ├── MapRegionCalculator.swift      # Map region calculation algorithm
+│   │   └── WikipediaURLBuilder.swift      # Deep link URL builder
 │   ├── Protocols/
-│   │   └── PlacesRepositoryProtocol.swift
+│   │   └── PlacesRepositoryProtocol.swift  # Repository interface
 │   └── UseCases/
-│       └── GetLocationsUseCase.swift
+│       ├── GetLocationsUseCase.swift       # Fetch locations use case
+│       └── CreateCustomLocationUseCase.swift # Create custom location use case
 ├── Data/
 │   ├── Network/
-│   │   └── PlacesNetworkService.swift
+│   │   └── PlacesNetworkService.swift     # Network service with configurable URL
 │   └── Repositories/
-│       └── PlacesRepository.swift
+│       └── PlacesRepository.swift         # Repository implementation
 └── Presentation/
-    ├── Theme.swift
+    ├── Theme.swift                         # App theme and colors
     ├── ViewModels/
-    │   └── PlacesViewModel.swift
+    │   └── PlacesViewModel.swift          # ViewModel (UI state management only)
     └── Views/
-        ├── PlacesListView.swift
-        ├── PlacesMapView.swift
-        ├── PlaceRowView.swift
-        ├── EmptyStateView.swift
-        └── CustomLocationView.swift
+        ├── PlacesListView.swift            # Main list/map view
+        ├── PlacesMapView.swift            # Map view component
+        ├── PlaceRowView.swift              # Location row component
+        ├── EmptyStateView.swift            # Empty state component
+        └── CustomLocationView.swift        # Custom location input form
 ```
+
+### Architecture Principles
+
+- **Domain Layer**: Contains all business logic, validation rules, and use cases
+- **Data Layer**: Handles data fetching and persistence (no business logic)
+- **Presentation Layer**: Only contains UI logic and state management
+- **Dependency Injection**: All dependencies injected via `DependencyContainer`
 
 ## Setup
 
@@ -108,13 +120,14 @@ Examples:
 Test coverage includes:
 - `PlacesViewModelTests`: ViewModel logic, validation, edge cases, custom location creation, and data consistency between map/list views
 - `GetLocationsUseCaseTests`: Use case execution and error handling
-- `PlaceModelTests`: Model properties, URL generation, and decoding
+- `CreateCustomLocationUseCaseTests`: Custom location creation with validation
+- `PlaceModelTests`: Model properties, URL generation, decoding, and formatting methods
 - `WikipediaURLBuilderTests`: URL building with valid and invalid coordinates
 - `PlacesRepositoryTests`: Repository success and error paths
-- `PlacesNetworkServiceTests`: Network service with mocked URLSession
+- `PlacesNetworkServiceTests`: Network service with mocked URLSession, including decoding error handling
 - `PlaceDecodingTests`: JSON decoding for Place and PlacesResponse
-- `NetworkErrorTests`: Error descriptions and types
-- `AccessibilityTests`: Accessibility labels and text generation
+- `NetworkErrorTests`: Error descriptions and types, including decoding errors
+- `PlaceAccessibilityTests`: Accessibility labels, values, and text generation
 
 ### UI Tests
 
@@ -159,10 +172,11 @@ The app uses a clean, modern design with:
 
 ## Notes
 
-- Coordinates are validated (latitude: -90 to 90, longitude: -180 to 180)
+- Coordinates are validated using `CoordinateValidator` (latitude: -90 to 90, longitude: -180 to 180)
 - Custom locations are automatically shown in both map and list views for consistency
-- The app handles network errors gracefully
-- Full accessibility support with VoiceOver labels
+- The app handles network errors gracefully with proper error types
+- Full accessibility support with VoiceOver labels, hints, and values
 - JSON supports locations with or without names
-- Map view uses MapKit with efficient annotation handling
+- Map view uses MapKit with efficient annotation handling and accessibility
 - List view uses lazy loading for performance
+- All coordinate formatting centralized in `Place` model for consistency
