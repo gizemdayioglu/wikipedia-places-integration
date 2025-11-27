@@ -4,8 +4,10 @@ import Foundation
 final class DependencyContainer {
     static let shared = DependencyContainer()
     
+    private let baseURL = "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json"
+    
     private lazy var networkService: PlacesNetworkServiceProtocol = {
-        PlacesNetworkService()
+        PlacesNetworkService(baseURL: baseURL)
     }()
     
     private lazy var placesRepository: PlacesRepositoryProtocol = {
@@ -16,8 +18,15 @@ final class DependencyContainer {
         GetLocationsUseCase(repository: placesRepository)
     }()
     
+    private lazy var createCustomLocationUseCase: CreateCustomLocationUseCase = {
+        CreateCustomLocationUseCase()
+    }()
+    
     lazy var placesViewModel: PlacesViewModel = {
-        PlacesViewModel(getLocationsUseCase: getLocationsUseCase)
+        PlacesViewModel(
+            getLocationsUseCase: getLocationsUseCase,
+            createCustomLocationUseCase: createCustomLocationUseCase
+        )
     }()
     
     private init() {}
