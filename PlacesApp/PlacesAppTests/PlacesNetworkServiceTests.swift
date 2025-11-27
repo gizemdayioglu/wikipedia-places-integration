@@ -8,7 +8,10 @@ final class PlacesNetworkServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockURLSession = MockURLSession()
-        service = PlacesNetworkService(urlSession: mockURLSession)
+        service = PlacesNetworkService(
+            baseURL: "https://example.com/locations.json",
+            urlSession: mockURLSession
+        )
     }
     
     override func tearDown() {
@@ -87,7 +90,11 @@ final class PlacesNetworkServiceTests: XCTestCase {
             _ = try await service.fetchLocations()
             XCTFail("Expected error")
         } catch {
-            XCTAssertNotNil(error)
+            if case NetworkError.decodingError(let underlyingError) = error {
+                XCTAssertNotNil(underlyingError)
+            } else {
+                XCTFail("Expected decodingError")
+            }
         }
     }
 }

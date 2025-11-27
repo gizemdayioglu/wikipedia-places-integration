@@ -11,10 +11,12 @@ protocol URLSessionProtocol {
 extension URLSession: URLSessionProtocol {}
 
 final class PlacesNetworkService: PlacesNetworkServiceProtocol {
+    private let decoder = JSONDecoder()
     private let urlSession: URLSessionProtocol
-    private let baseURL = "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json"
+    private let baseURL: String
     
-    init(urlSession: URLSessionProtocol = URLSession.shared) {
+    init(baseURL: String, urlSession: URLSessionProtocol = URLSession.shared) {
+        self.baseURL = baseURL
         self.urlSession = urlSession
     }
     
@@ -33,9 +35,12 @@ final class PlacesNetworkService: PlacesNetworkServiceProtocol {
             throw NetworkError.httpError(statusCode: httpResponse.statusCode)
         }
         
-        let decoder = JSONDecoder()
-        let placesResponse = try decoder.decode(PlacesResponse.self, from: data)
-        return placesResponse.locations
+        do {
+            let placesResponse = try decoder.decode(PlacesResponse.self, from: data)
+            return placesResponse.locations
+        } catch {
+            throw NetworkError.decodingError(error)
+        }
     }
 }
 
