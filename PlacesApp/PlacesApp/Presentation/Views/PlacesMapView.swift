@@ -25,7 +25,8 @@ struct PlacesMapView: UIViewRepresentable {
         
         let annotations = allPlaces.map { PlaceAnnotation(place: $0) }
         mapView.addAnnotations(annotations)
-        mapView.accessibilityValue = "\(allPlaces.count) locations"
+        let locationText = allPlaces.count == 1 ? "location" : "locations"
+        mapView.accessibilityValue = "\(allPlaces.count) \(locationText) shown"
         if !allPlaces.isEmpty {
             let region = calculateRegion(for: allPlaces)
             mapView.setRegion(region, animated: true)
@@ -37,33 +38,7 @@ struct PlacesMapView: UIViewRepresentable {
     }
     
     private func calculateRegion(for places: [Place]) -> MKCoordinateRegion {
-        guard !places.isEmpty else {
-            return MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: 52.3676, longitude: 4.9041),
-                span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-            )
-        }
-        
-        let latitudes = places.map { $0.latitude }
-        let longitudes = places.map { $0.longitude }
-        
-        let minLat = latitudes.min() ?? 0
-        let maxLat = latitudes.max() ?? 0
-        let minLon = longitudes.min() ?? 0
-        let maxLon = longitudes.max() ?? 0
-        
-        let center = CLLocationCoordinate2D(
-            latitude: (minLat + maxLat) / 2,
-            longitude: (minLon + maxLon) / 2
-        )
-        
-        let latDelta = max((maxLat - minLat) * 1.3, 0.1)
-        let lonDelta = max((maxLon - minLon) * 1.3, 0.1)
-        
-        return MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        )
+        return MapRegionCalculator.calculateRegion(for: places)
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
@@ -90,6 +65,9 @@ struct PlacesMapView: UIViewRepresentable {
             annotationView.isAccessibilityElement = true
             annotationView.canShowCallout = false
             annotationView.accessibilityLabel = placeAnnotation.place.displayName
+            let latFormatted = placeAnnotation.place.formattedLatitude()
+            let lonFormatted = placeAnnotation.place.formattedLongitude()
+            annotationView.accessibilityValue = "Latitude \(latFormatted), Longitude \(lonFormatted)"
             annotationView.accessibilityHint = "Opens Wikipedia at this location"
             annotationView.accessibilityTraits.insert(.button)
     
@@ -110,7 +88,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
         if let description = place.description {
             return description
         }
-        return "Latitude: \(String(format: "%.4f", place.latitude)), Longitude: \(String(format: "%.4f", place.longitude))"
+        return "Latitude: \(place.formattedLatitude(decimalPlaces: 4)), Longitude: \(place.formattedLongitude(decimalPlaces: 4))"
     }
     
     init(place: Place) {

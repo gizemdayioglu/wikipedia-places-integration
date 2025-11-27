@@ -94,7 +94,10 @@ final class PlaceAccessibilityTests: XCTestCase {
     
     @MainActor
     func testPlacesViewModel_IsCustomLocationValid_EdgeCases() {
-        let viewModel = PlacesViewModel(getLocationsUseCase: GetLocationsUseCase(repository: MockPlacesRepositoryForViewModel()))
+        let viewModel = PlacesViewModel(
+            getLocationsUseCase: GetLocationsUseCase(repository: MockPlacesRepositoryForViewModel()),
+            createCustomLocationUseCase: CreateCustomLocationUseCase()
+        )
         
         viewModel.customLatitude = "90"
         viewModel.customLongitude = "180"

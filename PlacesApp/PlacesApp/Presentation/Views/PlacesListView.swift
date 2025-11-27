@@ -56,14 +56,13 @@ struct PlacesListView: View {
                         .onTapGesture {
                             openWikipedia(for: place)
                         }
-                        .accessibilityHint("Opens Wikipedia at this location")
                     }
                     .listStyle(.plain)
+                    .accessibilityLabel("List of \(viewModel.allPlaces.count) locations")
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .navigationTitle("Places")
-            .accessibilityAddTraits(.isHeader)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -110,8 +109,8 @@ struct PlacesListView: View {
         guard let url = place.wikipediaDeepLinkURL else { return }
         UIApplication.shared.open(url) { success in
             if !success {
-                viewModel.errorMessage = "Wikipedia app is not installed. Please install and run the Wikipedia app first."
-                   showError = true
+                viewModel.errorMessage = ErrorMessages.wikipediaAppNotInstalled
+                showError = true
             }
         }
     }

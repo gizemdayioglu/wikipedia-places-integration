@@ -25,7 +25,7 @@ struct PlaceRowView: View {
                 }
                 
                 HStack(spacing: 6) {
-                    Label(String(format: "%.4f", place.latitude), systemImage: "location.circle.fill")
+                    Label(place.formattedLatitude(decimalPlaces: 4), systemImage: "location.circle.fill")
                         .font(.caption)
                         .foregroundColor(AppTheme.secondaryText)
                     
@@ -33,7 +33,7 @@ struct PlaceRowView: View {
                         .font(.caption)
                         .foregroundColor(AppTheme.secondaryText)
                     
-                    Label(String(format: "%.4f", place.longitude), systemImage: "location.circle.fill")
+                    Label(place.formattedLongitude(decimalPlaces: 4), systemImage: "location.circle.fill")
                         .font(.caption)
                         .foregroundColor(AppTheme.secondaryText)
                 }
@@ -60,28 +60,11 @@ struct PlaceRowView: View {
         }
     }
     
-    private var latitudeFormatted: String {
-        String(format: "%.2f", place.latitude)
-    }
-    
-    private var longitudeFormatted: String {
-        String(format: "%.2f", place.longitude)
-    }
-    
     internal var rowAccessibilityLabel: String {
         place.displayName
     }
     
     internal var rowAccessibilityValue: String {
-        var parts: [String] = []
-        
-        if let desc = place.description {
-            parts.append(desc)
-        }
-
-        parts.append("Latitude \(latitudeFormatted)")
-        parts.append("Longitude \(longitudeFormatted)")
-        
-        return parts.joined(separator: ", ")
+        place.accessibilityValue
     }
 }

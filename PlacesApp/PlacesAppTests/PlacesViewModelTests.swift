@@ -9,8 +9,12 @@ final class PlacesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockRepository = MockPlacesRepositoryForViewModel()
-        let useCase = GetLocationsUseCase(repository: mockRepository)
-        viewModel = PlacesViewModel(getLocationsUseCase: useCase)
+        let getLocationsUseCase = GetLocationsUseCase(repository: mockRepository)
+        let createCustomLocationUseCase = CreateCustomLocationUseCase()
+        viewModel = PlacesViewModel(
+            getLocationsUseCase: getLocationsUseCase,
+            createCustomLocationUseCase: createCustomLocationUseCase
+        )
     }
     
     override func tearDown() {

@@ -12,9 +12,14 @@ final class PlacesViewModel: ObservableObject {
     @Published var shouldShowCustomLocationOnMap = false
     
     private let getLocationsUseCase: GetLocationsUseCase
+    private let createCustomLocationUseCase: CreateCustomLocationUseCase
     
-    init(getLocationsUseCase: GetLocationsUseCase) {
+    init(
+        getLocationsUseCase: GetLocationsUseCase,
+        createCustomLocationUseCase: CreateCustomLocationUseCase
+    ) {
         self.getLocationsUseCase = getLocationsUseCase
+        self.createCustomLocationUseCase = createCustomLocationUseCase
     }
     
     func loadPlaces() async {
@@ -31,9 +36,15 @@ final class PlacesViewModel: ObservableObject {
         isLoading = false
     }
     
+    private var parsedCoordinates: (lat: Double, lon: Double)? {
+        CoordinateValidator.parseAndValidate(
+            latString: customLatitude,
+            lonString: customLongitude
+        )
+    }
+    
     func openWikipediaWithCustomLocation() -> URL? {
-        guard let lat = Double(customLatitude),
-              let lon = Double(customLongitude) else {
+        guard let (lat, lon) = parsedCoordinates else {
             return nil
         }
         
@@ -41,26 +52,13 @@ final class PlacesViewModel: ObservableObject {
     }
     
     var isCustomLocationValid: Bool {
-        guard let lat = Double(customLatitude),
-              let lon = Double(customLongitude) else {
-            return false
-        }
-        return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180
+        return parsedCoordinates != nil
     }
     
     func createCustomLocation() -> Place? {
-        guard let lat = Double(customLatitude),
-              let lon = Double(customLongitude),
-              isCustomLocationValid else {
-            return nil
-        }
-        
-        return Place(
-            id: "custom-\(lat),\(lon)",
-            name: "Custom Location",
-            latitude: lat,
-            longitude: lon,
-            description: "Custom coordinates"
+        return createCustomLocationUseCase.execute(
+            latString: customLatitude,
+            lonString: customLongitude
         )
     }
     
