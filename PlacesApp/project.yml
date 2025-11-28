@@ -9,6 +9,17 @@ options:
     - en
     - nl
 
+schemes:
+  PlacesApp:
+    build:
+      targets:
+        PlacesApp: all
+    test:
+      targets:
+        - name: PlacesAppTests
+        - name: PlacesAppUITests
+      gatherCoverageData: false
+
 targets:
   PlacesApp:
     type: application
