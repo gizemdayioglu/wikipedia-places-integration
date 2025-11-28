@@ -9,10 +9,10 @@ struct CreateCustomLocationUseCase {
         
         return Place(
             id: "custom-\(lat),\(lon)",
-            name: "Custom Location",
+            name: LocalizedStrings.customLocationName,
             latitude: lat,
             longitude: lon,
-            description: "Custom coordinates"
+            description: NSLocalizedString("place.custom.coordinates", comment: "Custom coordinates description")
         )
     }
 }

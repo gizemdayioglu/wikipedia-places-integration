@@ -53,9 +53,9 @@ struct PlaceRowView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(rowAccessibilityLabel)
         .accessibilityValue(rowAccessibilityValue)
-        .accessibilityHint("Opens details about this location on Wikipedia")
+        .accessibilityHint(LocalizedStrings.accessibilityOpenWikipedia)
         .accessibilityAddTraits(.isButton)
-        .accessibilityAction(named: "Open Wikipedia") {
+        .accessibilityAction(named: LocalizedStrings.accessibilityOpenWikipedia) {
             onActivate?()
         }
     }

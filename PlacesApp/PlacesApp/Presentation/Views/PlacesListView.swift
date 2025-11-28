@@ -1,8 +1,15 @@
 import SwiftUI
 
 enum ViewMode: String, CaseIterable {
-    case map = "Map"
-    case list = "List"
+    case map
+    case list
+    
+    var localizedName: LocalizedStringKey {
+        switch self {
+        case .map: return "view.mode.map"
+        case .list: return "view.mode.list"
+        }
+    }
 }
 
 struct PlacesListView: View {
@@ -18,7 +25,7 @@ struct PlacesListView: View {
                 contentView
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .navigationTitle("Places")
+            .navigationTitle("places.title")
             .toolbar {
                 addCustomLocationButton
             }
@@ -26,8 +33,8 @@ struct PlacesListView: View {
                 CustomLocationView()
                     .environmentObject(viewModel)
             }
-            .alert("Error", isPresented: $showError, presenting: viewModel.errorMessage) { _ in
-                Button("OK") {
+            .alert("message.error", isPresented: $showError, presenting: viewModel.errorMessage) { _ in
+                Button("button.ok") {
                     showError = false
                     viewModel.errorMessage = nil
                 }
@@ -71,23 +78,24 @@ private extension PlacesListView {
 private extension PlacesListView {
     
     var viewModeSelector: some View {
-        Picker("View Mode", selection: $viewMode) {
+        Picker("view.mode", selection: $viewMode) {
             ForEach(ViewMode.allCases, id: \.self) { mode in
-                Text(mode.rawValue).tag(mode)
+                Text(mode.localizedName).tag(mode)
             }
         }
         .pickerStyle(.segmented)
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .background(Color(.systemBackground))
-        .accessibilityLabel("View mode selector")
+        .accessibilityLabel(LocalizedStrings.accessibilityViewModeSelector)
         .accessibilityIdentifier("ViewModeSelector")
-        .accessibilityHint("Switch between map and list view")
+        .accessibilityHint(LocalizedStrings.accessibilityViewModeHint)
     }
     
     var loadingView: some View {
-        ProgressView("Loading places...")
+        ProgressView("message.loading.places")
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityLabel("message.loading.places")
             .accessibilityIdentifier("LoadingProgressView")
     }
     
@@ -119,7 +127,7 @@ private extension PlacesListView {
             }
         }
         .listStyle(.plain)
-        .accessibilityLabel("\(viewModel.allPlaces.count) locations")
+        .accessibilityLabel(LocalizedStrings.locationsCount(viewModel.allPlaces.count))
     }
     
     var addCustomLocationButton: some View {
@@ -127,8 +135,8 @@ private extension PlacesListView {
             showCustomLocation = true
         } label: {
             Image(systemName: "plus.circle")
-                .accessibilityLabel("Add custom location")
-                .accessibilityHint("Opens a form to enter coordinates")
+                .accessibilityLabel(LocalizedStrings.accessibilityAddCustomLocation)
+                .accessibilityHint(LocalizedStrings.accessibilityAddCustomLocationHint)
         }
         .accessibilityIdentifier("AddCustomLocationButton")
     }
@@ -141,7 +149,7 @@ private extension PlacesListView {
         UIApplication.shared.open(url) { success in
             if !success {
                 viewModel.errorMessage = ErrorMessages.wikipediaAppNotInstalled
-                showError = true
+                   showError = true
             }
         }
     }

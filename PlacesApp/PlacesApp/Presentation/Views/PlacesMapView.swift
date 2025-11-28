@@ -25,8 +25,7 @@ struct PlacesMapView: UIViewRepresentable {
         
         let annotations = allPlaces.map { PlaceAnnotation(place: $0) }
         mapView.addAnnotations(annotations)
-        let locationText = allPlaces.count == 1 ? "location" : "locations"
-        mapView.accessibilityValue = "\(allPlaces.count) \(locationText) shown"
+        mapView.accessibilityValue = LocalizedStrings.mapLocationsShown(allPlaces.count)
         if !allPlaces.isEmpty {
             let region = calculateRegion(for: allPlaces)
             mapView.setRegion(region, animated: true)
@@ -67,8 +66,8 @@ struct PlacesMapView: UIViewRepresentable {
             annotationView.accessibilityLabel = placeAnnotation.place.displayName
             let latFormatted = placeAnnotation.place.formattedLatitude()
             let lonFormatted = placeAnnotation.place.formattedLongitude()
-            annotationView.accessibilityValue = "Latitude \(latFormatted), Longitude \(lonFormatted)"
-            annotationView.accessibilityHint = "Opens Wikipedia at this location"
+            annotationView.accessibilityValue = String(format: NSLocalizedString("map.annotation.coordinates", comment: "Map annotation coordinates format"), latFormatted, lonFormatted)
+            annotationView.accessibilityHint = LocalizedStrings.accessibilityOpenWikipediaLocation
             annotationView.accessibilityTraits.insert(.button)
     
             return annotationView
@@ -88,7 +87,9 @@ class PlaceAnnotation: NSObject, MKAnnotation {
         if let description = place.description {
             return description
         }
-        return "Latitude: \(place.formattedLatitude(decimalPlaces: 4)), Longitude: \(place.formattedLongitude(decimalPlaces: 4))"
+        return String(format: NSLocalizedString("map.annotation.subtitle", comment: "Map annotation subtitle format"), 
+                     place.formattedLatitude(decimalPlaces: 4), 
+                     place.formattedLongitude(decimalPlaces: 4))
     }
     
     init(place: Place) {

@@ -40,6 +40,8 @@ This installs dependencies and configures the project.
 
 For detailed information about PlacesApp, see [PlacesApp/README.md](PlacesApp/README.md).
 
+**Note:** PlacesApp supports localization in English and Dutch
+
 ### Wikipedia App
 
 1. Open `wikipedia-ios/Wikipedia.xcodeproj` in Xcode

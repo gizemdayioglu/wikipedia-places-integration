@@ -6,13 +6,13 @@ struct CustomLocationView: View {
     @State private var errorMessage: String?
 
     private var showLocationButtonLabel: String {
-        viewModel.isCustomLocationValid ? "Show Location" : "Show Location, disabled"
+        viewModel.isCustomLocationValid ? LocalizedStrings.showLocation : LocalizedStrings.showLocationDisabled
     }
     
     private var showLocationButtonHint: String {
         viewModel.isCustomLocationValid
-            ? "Shows the location on the map and in the list"
-            : "Enter valid latitude and longitude to enable"
+            ? LocalizedStrings.accessibilityShowLocationHint
+            : LocalizedStrings.accessibilityShowLocationDisabledHint
     }
     
     var body: some View {
@@ -21,7 +21,7 @@ struct CustomLocationView: View {
                 coordinatesSection
                 showLocationSection
             }
-            .navigationTitle("Custom Location")
+            .navigationTitle("custom.location.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -42,24 +42,24 @@ struct CustomLocationView: View {
     }
     
     private var coordinatesHeader: some View {
-        Text("Enter Coordinates")
+        Text("form.enter.coordinates")
             .accessibilityAddTraits(.isHeader)
-            .accessibilityHint("Enter the latitude and longitude")
+            .accessibilityHint(LocalizedStrings.accessibilityEnterCoordinatesHint)
     }
     
     private var latitudeField: some View {
-        TextField("Latitude (-90 to 90)", text: $viewModel.customLatitude)
+        TextField("form.latitude.placeholder", text: $viewModel.customLatitude)
             .keyboardType(.decimalPad)
-            .accessibilityLabel("Latitude")
-            .accessibilityHint("Enter a number between minus ninety and ninety")
+            .accessibilityLabel(LocalizedStrings.latitude)
+            .accessibilityHint(LocalizedStrings.accessibilityLatitudeHint)
             .accessibilityIdentifier("LatitudeField")
     }
     
     private var longitudeField: some View {
-        TextField("Longitude (-180 to 180)", text: $viewModel.customLongitude)
+        TextField("form.longitude.placeholder", text: $viewModel.customLongitude)
             .keyboardType(.decimalPad)
-            .accessibilityLabel("Longitude")
-            .accessibilityHint("Enter a number between minus one eighty and one eighty")
+            .accessibilityLabel(LocalizedStrings.longitude)
+            .accessibilityHint(LocalizedStrings.accessibilityLongitudeHint)
             .accessibilityIdentifier("LongitudeField")
     }
     
@@ -68,7 +68,7 @@ struct CustomLocationView: View {
             Button(action: showOnMap) {
                 HStack {
                     Spacer()
-                    Text("Show Location")
+                    Text("button.show.location")
                         .fontWeight(.semibold)
                     Spacer()
                 }
@@ -81,10 +81,10 @@ struct CustomLocationView: View {
     }
     
     private var doneButton: some View {
-        Button("Done", action: { dismiss() })
+        Button("button.done", action: { dismiss() })
             .accessibilityIdentifier("DoneButton")
-            .accessibilityLabel("Done")
-            .accessibilityHint("Close this screen")
+            .accessibilityLabel(LocalizedStrings.done)
+            .accessibilityHint(LocalizedStrings.accessibilityDoneHint)
     }
 
     private func showOnMap() {

@@ -1,5 +1,7 @@
 import Foundation
 
 enum ErrorMessages {
-    static let wikipediaAppNotInstalled = "Wikipedia app is not installed. Please install and run the Wikipedia app first."
+    static var wikipediaAppNotInstalled: String {
+        NSLocalizedString("error.wikipedia.app.not.installed", comment: "Wikipedia app not installed error message")
+    }
 }

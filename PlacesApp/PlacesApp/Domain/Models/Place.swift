@@ -36,7 +36,10 @@ struct Place: Identifiable, Codable, Equatable {
     }
     
     var displayName: String {
-        name ?? "Location (\(String(format: "%.2f", latitude)), \(String(format: "%.2f", longitude)))"
+        name ?? LocalizedStrings.locationCoordinates(
+            lat: String(format: "%.2f", latitude),
+            lon: String(format: "%.2f", longitude)
+        )
     }
     
     var wikipediaDeepLinkURL: URL? {
@@ -58,8 +61,8 @@ struct Place: Identifiable, Codable, Equatable {
             parts.append(desc)
         }
         
-        parts.append("Latitude \(formattedLatitude())")
-        parts.append("Longitude \(formattedLongitude())")
+        parts.append(String(format: LocalizedStrings.latitudeLabel, formattedLatitude()))
+        parts.append(String(format: LocalizedStrings.longitudeLabel, formattedLongitude()))
         
         return parts.joined(separator: ", ")
     }

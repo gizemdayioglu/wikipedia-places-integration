@@ -8,14 +8,14 @@ struct EmptyStateView: View {
                 .foregroundColor(AppTheme.secondaryText)
                 .accessibilityHidden(true)
             
-            Text("No places found")
+            Text("message.no.places.found")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("No places found.")
+        .accessibilityLabel(LocalizedStrings.accessibilityNoPlacesFound)
         .accessibilityAddTraits(.isStaticText)
     }
 }

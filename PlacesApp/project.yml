@@ -5,6 +5,9 @@ options:
     iOS: "15.0"
   developmentLanguage: en
   xcodeVersion: "14.0"
+  localizations:
+    - en
+    - nl
 
 targets:
   PlacesApp:
@@ -15,6 +18,9 @@ targets:
       - path: PlacesApp
     resources:
       - path: Assets.xcassets
+      - path: PlacesApp/Resources
+        type: folder
+        buildPhase: resources
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.places.app
       GENERATE_INFOPLIST_FILE: YES
