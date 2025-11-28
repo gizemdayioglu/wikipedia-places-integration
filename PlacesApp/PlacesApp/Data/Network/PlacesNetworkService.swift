@@ -14,13 +14,23 @@ final class PlacesNetworkService: PlacesNetworkServiceProtocol {
     private let decoder = JSONDecoder()
     private let urlSession: URLSessionProtocol
     private let baseURL: String
+    private let reachability: NetworkReachabilityProtocol
     
-    init(baseURL: String, urlSession: URLSessionProtocol = URLSession.shared) {
+    init(
+        baseURL: String,
+        urlSession: URLSessionProtocol = URLSession.shared,
+        reachability: NetworkReachabilityProtocol = NetworkReachability()
+    ) {
         self.baseURL = baseURL
         self.urlSession = urlSession
+        self.reachability = reachability
     }
     
     func fetchLocations() async throws -> [Place] {
+        guard reachability.isConnected else {
+            throw NetworkError.noConnection
+        }
+        
         guard let url = URL(string: baseURL) else {
             throw NetworkError.invalidURL
         }
@@ -49,6 +59,7 @@ enum NetworkError: LocalizedError {
     case invalidResponse
     case httpError(statusCode: Int)
     case decodingError(Error)
+    case noConnection
     
     var errorDescription: String? {
         switch self {
@@ -60,6 +71,8 @@ enum NetworkError: LocalizedError {
             return "HTTP error: \(code)"
         case .decodingError(let error):
             return "Failed to decode: \(error.localizedDescription)"
+        case .noConnection:
+            return NSLocalizedString("error.no.internet.connection", comment: "No internet connection error")
         }
     }
 }

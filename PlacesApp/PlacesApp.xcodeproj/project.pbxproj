@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0DE7F848BF2EDDF685D6537B /* PlacesNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE02131DA410890F6828EA7 /* PlacesNetworkService.swift */; };
+		10F879D8A480C19C7AE0D8F4 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4425CE8DE08369BB8C663F53 /* NetworkReachability.swift */; };
 		1593ADC3F9F5B0C112020FB6 /* PlacesNetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B51865360C38C621DD99F90 /* PlacesNetworkServiceTests.swift */; };
 		2007C677A0F590C3438B564F /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159898A484482FF66F1CCEE /* DependencyContainer.swift */; };
 		20B8736852685FF08539EF38 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8C49A5111C7E208AD0916879 /* Localizable.strings */; };
@@ -36,6 +37,7 @@
 		D1C71DFF4AB483AE920A8F76 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC30AE3A3EDA3BBA3A6E77 /* Place.swift */; };
 		DAF8B75BCE0E4480499F4B98 /* GetLocationsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84599F856932718D4BCE5FD6 /* GetLocationsUseCaseTests.swift */; };
 		DB40A5094AEA25E252034064 /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4CB50E91C0F0EA5743FD7 /* PlacesViewModel.swift */; };
+		E92800202ED9B64F0040A6A0 /* NetworkReachabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928001F2ED9B64F0040A6A0 /* NetworkReachabilityTests.swift */; };
 		EB51E57A03D628A5EF2EBA08 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316F06D9ABD569E88D28C776 /* EmptyStateView.swift */; };
 		EC8296067481867783B22EBC /* MapRegionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239ADE9C8A097B9E89C1C85 /* MapRegionCalculator.swift */; };
 		FC647A636588E2001725EE92 /* PlacesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB2A76BB51CC301666886D /* PlacesListView.swift */; };
@@ -67,6 +69,7 @@
 		1CD32D63EA75579C633A761D /* PlacesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesMapView.swift; sourceTree = "<group>"; };
 		28563FE24234E8F7F1B831F4 /* WikipediaURLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaURLBuilder.swift; sourceTree = "<group>"; };
 		316F06D9ABD569E88D28C776 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		4425CE8DE08369BB8C663F53 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
 		48C844E6260DD2C4195313EA /* CustomLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationView.swift; sourceTree = "<group>"; };
 		4D2FE893014E634FBF8CEBE7 /* PlacesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAppApp.swift; sourceTree = "<group>"; };
 		59BAB4FF5E0C53A1369A1BA4 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 		C9F7E4A870435BD50EDE77BE /* PlacesAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAppUITests.swift; sourceTree = "<group>"; };
 		CE32608245346DE75513DC90 /* PlacesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesRepository.swift; sourceTree = "<group>"; };
 		E239ADE9C8A097B9E89C1C85 /* MapRegionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionCalculator.swift; sourceTree = "<group>"; };
+		E928001F2ED9B64F0040A6A0 /* NetworkReachabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityTests.swift; sourceTree = "<group>"; };
 		F253FB3D18E295F4C16202F7 /* WikipediaURLBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaURLBuilderTests.swift; sourceTree = "<group>"; };
 		F25C5207653AD9A84F167351 /* PlacesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesRepositoryTests.swift; sourceTree = "<group>"; };
 		FAE8E9A433F4FA5DB0557DCB /* PlacesAppUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +156,7 @@
 		6B1FFBFD7CD40E9789118D75 /* PlacesAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				E928001F2ED9B64F0040A6A0 /* NetworkReachabilityTests.swift */,
 				7063C4D09D67F0B7B56E6E25 /* CreateCustomLocationUseCaseTests.swift */,
 				84599F856932718D4BCE5FD6 /* GetLocationsUseCaseTests.swift */,
 				9FFAAB57CC0FE32D5DB77149 /* NetworkErrorTests.swift */,
@@ -172,6 +177,7 @@
 				1A03D6771C92D3A4460A779A /* CoordinateValidator.swift */,
 				049E9C6DA19E5D71493E4985 /* LocalizedStrings.swift */,
 				E239ADE9C8A097B9E89C1C85 /* MapRegionCalculator.swift */,
+				4425CE8DE08369BB8C663F53 /* NetworkReachability.swift */,
 				28563FE24234E8F7F1B831F4 /* WikipediaURLBuilder.swift */,
 			);
 			path = Utils;
@@ -365,7 +371,6 @@
 			);
 			mainGroup = B75253A4DFAAC5310CBB654A;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -408,6 +413,7 @@
 				3830F081DB6B77C3165E5EAD /* PlaceModelTests.swift in Sources */,
 				1593ADC3F9F5B0C112020FB6 /* PlacesNetworkServiceTests.swift in Sources */,
 				A1F55415C1A49E34CE02A4EF /* PlacesRepositoryTests.swift in Sources */,
+				E92800202ED9B64F0040A6A0 /* NetworkReachabilityTests.swift in Sources */,
 				4674001AC615F00ACB5EB33C /* PlacesViewModelTests.swift in Sources */,
 				805144734113911C8A85F69F /* WikipediaURLBuilderTests.swift in Sources */,
 			);
@@ -426,6 +432,7 @@
 				A01C00271A792F4B89DF46CB /* GetLocationsUseCase.swift in Sources */,
 				8B91C6C2D6A22B2E5A949DBD /* LocalizedStrings.swift in Sources */,
 				EC8296067481867783B22EBC /* MapRegionCalculator.swift in Sources */,
+				10F879D8A480C19C7AE0D8F4 /* NetworkReachability.swift in Sources */,
 				D1C71DFF4AB483AE920A8F76 /* Place.swift in Sources */,
 				47FDDB261A843854D7DC75D1 /* PlaceRowView.swift in Sources */,
 				2BBD5D405237B1DE27350C7F /* PlacesAppApp.swift in Sources */,

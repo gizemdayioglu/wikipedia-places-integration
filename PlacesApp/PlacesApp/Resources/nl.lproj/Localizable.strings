@@ -38,6 +38,7 @@
 "place.custom.location.name" = "Aangepaste Locatie";
 "place.custom.coordinates" = "Aangepaste coördinaten";
 "error.wikipedia.app.not.installed" = "Wikipedia-app is niet geïnstalleerd. Installeer en voer eerst de Wikipedia-app uit.";
+"error.no.internet.connection" = "Geen internetverbinding. Controleer uw netwerkinstellingen en probeer het opnieuw.";
 "map.locations.shown" = "%d plaatsen";
 "map.shown" = "getoond";
 "map.annotation.coordinates" = "Breedtegraad %@, Lengtegraad %@";

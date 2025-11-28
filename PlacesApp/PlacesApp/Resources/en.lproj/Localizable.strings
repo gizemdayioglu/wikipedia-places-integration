@@ -38,6 +38,7 @@
 "place.custom.location.name" = "Custom Location";
 "place.custom.coordinates" = "Custom coordinates";
 "error.wikipedia.app.not.installed" = "Wikipedia app is not installed. Please install and run the Wikipedia app first.";
+"error.no.internet.connection" = "No internet connection. Please check your network settings and try again.";
 "map.locations.shown" = "%d locations";
 "map.shown" = "shown";
 "map.annotation.coordinates" = "Latitude %@, Longitude %@";
