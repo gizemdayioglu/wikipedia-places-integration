@@ -146,14 +146,6 @@ UI tests cover:
 - Custom location input and validation
 - Showing custom locations in both map and list views
 
-## Wikipedia App Changes
-
-The Wikipedia app was modified to support coordinate-based deep linking:
-
-1. **NSUserActivity+WMFExtensions.m**: Extracts `lat` and `lon`
-2. **PlacesViewController.swift**: Added `showLocation(latitude:longitude:)`
-3. **WMFAppViewController.m**: Updated to handle coordinates in Places activity
-
 ## Swift Concurrency
 
 The app uses modern Swift Concurrency:

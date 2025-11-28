@@ -52,16 +52,21 @@ Note: The Wikipedia app is a large project. You may need to install dependencies
 
 ## Wikipedia App Changes
 
-The Wikipedia app was modified in 3 files to support coordinate-based deep linking:
+I modified the Wikipedia app so it can open the Places tab directly to a specific location using coordinates.
+When you send it a deep link like: 
+`wikipedia://places?lat=52.3676&lon=4.9041`, 
+it extracts those coordinates, makes sure they're valid, and then centers the map on that location.
 
-1. **NSUserActivity+WMFExtensions.m**: Extracts latitude and longitude from deep link URLs
-2. **PlacesViewController.swift**: Added a method to show a specific location by coordinates
-3. **WMFAppViewController.m**: Updated to handle coordinates in the Places activity
+The implementation is done across three files:
 
-The deep link format is:
-```
-wikipedia://places?lat=<latitude>&lon=<longitude>
-```
+1. **NSUserActivity+WMFExtensions.m**  
+   Parses the deep link URL, extracts the latitude and longitude values, and validates them so that only valid coordinates are passed through.
+
+2. **PlacesViewController.swift**  
+   Adds a method that takes valid coordinates and updates the map view to show that location.
+
+3. **WMFAppViewController.m**  
+   Handles incoming Places deep links and connects the flow together by showing the target location on the map if coordinates are valid, or falling back safely when they are not.
 
 ## Testing the Integration
 
