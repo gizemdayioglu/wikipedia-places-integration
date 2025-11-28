@@ -54,44 +54,6 @@ final class PlacesViewModelTests: XCTestCase {
         XCTAssertNotNil(viewModel.errorMessage)
     }
     
-    func testOpenWikipediaWithCustomLocation_ValidCoordinates() {
-        // Given
-        viewModel.customLatitude = "52.3676"
-        viewModel.customLongitude = "4.9041"
-        
-        // When
-        let url = viewModel.openWikipediaWithCustomLocation()
-        
-        // Then
-        XCTAssertNotNil(url)
-        XCTAssertEqual(url?.scheme, "wikipedia")
-        XCTAssertEqual(url?.host, "places")
-    }
-    
-    func testOpenWikipediaWithCustomLocation_InvalidLatitude() {
-        // Given
-        viewModel.customLatitude = "100" // Invalid latitude
-        viewModel.customLongitude = "4.9041"
-        
-        // When
-        let url = viewModel.openWikipediaWithCustomLocation()
-        
-        // Then
-        XCTAssertNil(url)
-    }
-    
-    func testOpenWikipediaWithCustomLocation_InvalidLongitude() {
-        // Given
-        viewModel.customLatitude = "52.3676"
-        viewModel.customLongitude = "200" // Invalid longitude
-        
-        // When
-        let url = viewModel.openWikipediaWithCustomLocation()
-        
-        // Then
-        XCTAssertNil(url)
-    }
-    
     func testIsCustomLocationValid_ValidCoordinates() {
         // Given
         viewModel.customLatitude = "52.3676"
@@ -148,22 +110,6 @@ final class PlacesViewModelTests: XCTestCase {
         
         await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertFalse(viewModel.isLoading)
-    }
-    
-    func testOpenWikipediaWithCustomLocation_EmptyStrings() {
-        viewModel.customLatitude = ""
-        viewModel.customLongitude = ""
-        
-        let url = viewModel.openWikipediaWithCustomLocation()
-        XCTAssertNil(url)
-    }
-    
-    func testOpenWikipediaWithCustomLocation_NonNumeric() {
-        viewModel.customLatitude = "abc"
-        viewModel.customLongitude = "def"
-        
-        let url = viewModel.openWikipediaWithCustomLocation()
-        XCTAssertNil(url)
     }
     
     // MARK: - Custom Location Tests

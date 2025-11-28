@@ -28,26 +28,39 @@ struct MapRegionCalculator {
             )
         }
         
-        let latitudes = places.map { $0.latitude }
-        let longitudes = places.map { $0.longitude }
-        
-        let minLat = latitudes.min() ?? 0
-        let maxLat = latitudes.max() ?? 0
-        let minLon = longitudes.min() ?? 0
-        let maxLon = longitudes.max() ?? 0
-        
+        let lats = places.map(\.latitude)
+        let lons = places.map(\.longitude)
+
+        guard
+            let minLat = lats.min(),
+            let maxLat = lats.max(),
+            let minLon = lons.min(),
+            let maxLon = lons.max()
+        else {
+            return MKCoordinateRegion(
+                center: configuration.defaultCenter,
+                span: configuration.defaultSpan
+            )
+        }
+
+        let latSpan = max(
+            (maxLat - minLat) * configuration.paddingMultiplier,
+            configuration.minimumSpan
+        )
+
+        let lonSpan = max(
+            (maxLon - minLon) * configuration.paddingMultiplier,
+            configuration.minimumSpan
+        )
+
         let center = CLLocationCoordinate2D(
             latitude: (minLat + maxLat) / 2,
             longitude: (minLon + maxLon) / 2
         )
         
-        let latDelta = max((maxLat - minLat) * configuration.paddingMultiplier, configuration.minimumSpan)
-        let lonDelta = max((maxLon - minLon) * configuration.paddingMultiplier, configuration.minimumSpan)
+        let span = MKCoordinateSpan(latitudeDelta: latSpan, longitudeDelta: lonSpan)
         
-        return MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        )
+        return MKCoordinateRegion(center: center, span: span)
     }
 }
 

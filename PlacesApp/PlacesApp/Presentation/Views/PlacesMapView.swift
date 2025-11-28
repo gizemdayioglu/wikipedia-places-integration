@@ -97,4 +97,3 @@ class PlaceAnnotation: NSObject, MKAnnotation {
         super.init()
     }
 }
-

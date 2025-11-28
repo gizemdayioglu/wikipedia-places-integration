@@ -43,14 +43,6 @@ final class PlacesViewModel: ObservableObject {
         )
     }
     
-    func openWikipediaWithCustomLocation() -> URL? {
-        guard let (lat, lon) = parsedCoordinates else {
-            return nil
-        }
-        
-        return WikipediaURLBuilder.makePlacesURL(lat: lat, lon: lon)
-    }
-    
     var isCustomLocationValid: Bool {
         return parsedCoordinates != nil
     }
