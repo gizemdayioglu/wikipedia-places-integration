@@ -12,6 +12,7 @@ A demo app that opens the Wikipedia iOS app's Places tab with custom coordinates
 - Empty state handling with helpful messages
 - Pull-to-refresh support
 - SwiftUI with full accessibility support
+- Localization support for English and Dutch
 - Uses async/await for network operations
 - Unit tests for ViewModels and UseCases
 - UI tests for main user flows
@@ -32,7 +33,9 @@ PlacesApp/
 │   ├── Utils/
 │   │   ├── CoordinateValidator.swift      # Coordinate validation logic
 │   │   ├── MapRegionCalculator.swift      # Map region calculation algorithm
-│   │   └── WikipediaURLBuilder.swift      # Deep link URL builder
+│   │   ├── WikipediaURLBuilder.swift      # Deep link URL builder
+│   │   ├── LocalizedStrings.swift         # Centralized localization helper
+│   │   └── NetworkReachability.swift      # Network connectivity monitoring
 │   ├── Protocols/
 │   │   └── PlacesRepositoryProtocol.swift  # Repository interface
 │   └── UseCases/
@@ -127,6 +130,7 @@ Test coverage includes:
 - `PlacesNetworkServiceTests`: Network service with mocked URLSession, including decoding error handling
 - `PlaceDecodingTests`: JSON decoding for Place and PlacesResponse
 - `NetworkErrorTests`: Error descriptions and types, including decoding errors
+- `NetworkReachabilityTests`: Network connectivity checking
 - `PlaceAccessibilityTests`: Accessibility labels, values, and text generation
 
 ### UI Tests
@@ -174,9 +178,11 @@ The app uses a clean, modern design with:
 
 - Coordinates are validated using `CoordinateValidator` (latitude: -90 to 90, longitude: -180 to 180)
 - Custom locations are automatically shown in both map and list views for consistency
-- The app handles network errors gracefully with proper error types
+- The app checks network connectivity before making network requests using `NetworkReachability`
+- Network errors are handled with proper error types and localized error messages
 - Full accessibility support with VoiceOver labels, hints, and values
 - JSON supports locations with or without names
 - Map view uses MapKit with efficient annotation handling and accessibility
 - List view uses lazy loading for performance
 - All coordinate formatting centralized in `Place` model for consistency
+- All user-facing strings are localized
