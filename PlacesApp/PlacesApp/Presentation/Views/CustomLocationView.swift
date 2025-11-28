@@ -43,6 +43,7 @@ struct CustomLocationView: View {
     
     private var coordinatesHeader: some View {
         Text("form.enter.coordinates")
+            .foregroundColor(.primary)
             .accessibilityAddTraits(.isHeader)
             .accessibilityHint(LocalizedStrings.accessibilityEnterCoordinatesHint)
     }

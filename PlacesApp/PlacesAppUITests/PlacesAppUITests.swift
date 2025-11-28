@@ -10,9 +10,19 @@ final class PlacesAppUITests: XCTestCase {
         app.launch()
     }
     
+    var segmentedControl: XCUIElement {
+        let control = app.segmentedControls["ViewModeSelector"]
+        XCTAssertTrue(control.waitForExistence(timeout: 5))
+        return control
+    }
+    
+    func clearAndEnterText(_ element: XCUIElement, text: String) {
+        element.tap()
+        element.press(forDuration: 1)
+        element.typeText(text)
+    }
+    
     func testPlacesListViewLoadsData() {
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
-        XCTAssertTrue(segmentedControl.waitForExistence(timeout: 5))
         segmentedControl.buttons["List"].tap()
         
         let firstCell = app.cells.element(boundBy: 0)
@@ -21,11 +31,7 @@ final class PlacesAppUITests: XCTestCase {
     }
     
     func testMapViewToggle() {
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
-        XCTAssertTrue(segmentedControl.waitForExistence(timeout: 5))
-        
-        let mapButton = segmentedControl.buttons["Map"]
-        XCTAssertTrue(mapButton.isSelected)
+        XCTAssertTrue(segmentedControl.buttons["Map"].isSelected)
         
         segmentedControl.buttons["List"].tap()
         XCTAssertTrue(segmentedControl.buttons["List"].isSelected)
@@ -34,12 +40,11 @@ final class PlacesAppUITests: XCTestCase {
         XCTAssertTrue(segmentedControl.buttons["Map"].isSelected)
     }
     
-    func testCustomLocationButton() throws {
-        let button = app.buttons["AddCustomLocationButton"]
-        XCTAssertTrue(button.waitForExistence(timeout: 5))
+    func testCustomLocationButtonExists() {
+        XCTAssertTrue(app.buttons["AddCustomLocationButton"].waitForExistence(timeout: 5))
     }
     
-    func testCustomLocationInput() throws {
+    func testCustomLocationInput() {
         app.buttons["AddCustomLocationButton"].tap()
         
         let latField = app.textFields["LatitudeField"]
@@ -48,11 +53,8 @@ final class PlacesAppUITests: XCTestCase {
         XCTAssertTrue(latField.waitForExistence(timeout: 3))
         XCTAssertTrue(lonField.waitForExistence(timeout: 3))
         
-        latField.tap()
-        latField.typeText("52.3676")
-        
-        lonField.tap()
-        lonField.typeText("4.9041")
+        clearAndEnterText(latField, text: "52.3676")
+        clearAndEnterText(lonField, text: "4.9041")
         
         let showButton = app.buttons["ShowLocationButton"]
         XCTAssertTrue(showButton.waitForExistence(timeout: 2))
@@ -60,18 +62,16 @@ final class PlacesAppUITests: XCTestCase {
     }
     
     func testPullToRefresh() {
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
         segmentedControl.buttons["List"].tap()
         
         let firstCell = app.cells.element(boundBy: 0)
         XCTAssertTrue(firstCell.waitForExistence(timeout: 5))
         
-        firstCell.swipeDown()
+        app.swipeDown()
         XCTAssertTrue(firstCell.waitForExistence(timeout: 3))
     }
     
     func testListToMapTransition() {
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
         segmentedControl.buttons["List"].tap()
         
         let firstCell = app.cells.element(boundBy: 0)
@@ -82,9 +82,6 @@ final class PlacesAppUITests: XCTestCase {
     }
     
     func testMapToListTransition() {
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
-        XCTAssertTrue(segmentedControl.waitForExistence(timeout: 5))
-        
         segmentedControl.buttons["List"].tap()
         
         let firstCell = app.cells.element(boundBy: 0)
@@ -92,13 +89,8 @@ final class PlacesAppUITests: XCTestCase {
     }
     
     func testCustomLocationButtonOpensSheet() {
-        let button = app.buttons["AddCustomLocationButton"]
-        XCTAssertTrue(button.waitForExistence(timeout: 5))
-        
-        button.tap()
-        
-        let latField = app.textFields["LatitudeField"]
-        XCTAssertTrue(latField.waitForExistence(timeout: 3))
+        app.buttons["AddCustomLocationButton"].tap()
+        XCTAssertTrue(app.textFields["LatitudeField"].waitForExistence(timeout: 3))
     }
     
     func testCustomLocationValidation() {
@@ -110,13 +102,9 @@ final class PlacesAppUITests: XCTestCase {
         
         XCTAssertTrue(latField.waitForExistence(timeout: 3))
         XCTAssertTrue(lonField.waitForExistence(timeout: 3))
-        XCTAssertTrue(showButton.waitForExistence(timeout: 2))
         
-        latField.tap()
-        latField.typeText("999")
-        lonField.tap()
-        lonField.typeText("999")
-        
+        clearAndEnterText(latField, text: "999")
+        clearAndEnterText(lonField, text: "999")
         XCTAssertFalse(showButton.isEnabled)
         
         latField.doubleTap()
@@ -132,17 +120,10 @@ final class PlacesAppUITests: XCTestCase {
         
         let latField = app.textFields["LatitudeField"]
         let lonField = app.textFields["LongitudeField"]
-        let showButton = app.buttons["ShowLocationButton"]
+        clearAndEnterText(latField, text: "52.3676")
+        clearAndEnterText(lonField, text: "4.9041")
         
-        latField.tap()
-        latField.typeText("52.3676")
-        lonField.tap()
-        lonField.typeText("4.9041")
-        
-        showButton.tap()
-        
-        let segmentedControl = app.segmentedControls["ViewModeSelector"]
-        XCTAssertTrue(segmentedControl.waitForExistence(timeout: 3))
+        app.buttons["ShowLocationButton"].tap()
         
         segmentedControl.buttons["List"].tap()
         
