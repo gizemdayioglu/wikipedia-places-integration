@@ -37,7 +37,7 @@ struct PlacesMapView: UIViewRepresentable {
     }
     
     private func calculateRegion(for places: [Place]) -> MKCoordinateRegion {
-        return MapRegionCalculator.calculateRegion(for: places)
+        MapRegionCalculator.calculateRegion(for: places)
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
@@ -48,34 +48,52 @@ struct PlacesMapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            guard let annotation = view.annotation as? PlaceAnnotation else { return }
-            onPlaceTapped(annotation.place)
-            mapView.deselectAnnotation(annotation, animated: true)
+            if let annotation = view.annotation as? PlaceAnnotation {
+                onPlaceTapped(annotation.place)
+                mapView.deselectAnnotation(annotation, animated: true)
+                return
+            }
+            if let cluster = view.annotation as? MKClusterAnnotation {
+                mapView.deselectAnnotation(cluster, animated: false)
+            }
         }
+
     
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        func mapView(_ mapView: MKMapView,
+                     viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if let cluster = annotation as? MKClusterAnnotation {
+                let annotationView = MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: "Cluster")
+
+                annotationView.clusteringIdentifier = "place"
+                annotationView.isAccessibilityElement = true
+                annotationView.accessibilityTraits = [.button]
+                annotationView.accessibilityLabel = LocalizedStrings.locationsCount(cluster.memberAnnotations.count)
+
+                return annotationView
+            }
+
             guard let placeAnnotation = annotation as? PlaceAnnotation else { return nil }
 
             let identifier = "PlaceAnnotationView"
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+            let annotationView =
+                mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
                 ?? MKMarkerAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
 
+            annotationView.clusteringIdentifier = "place"
             annotationView.annotation = placeAnnotation
             annotationView.isAccessibilityElement = true
             annotationView.canShowCallout = false
             annotationView.accessibilityLabel = placeAnnotation.place.displayName
-            let latFormatted = placeAnnotation.place.formattedLatitude()
-            let lonFormatted = placeAnnotation.place.formattedLongitude()
-            annotationView.accessibilityValue = String(format: NSLocalizedString("map.annotation.coordinates", comment: "Map annotation coordinates format"), latFormatted, lonFormatted)
+            annotationView.accessibilityValue = placeAnnotation.place.accessibilityValue
             annotationView.accessibilityHint = LocalizedStrings.accessibilityOpenWikipediaLocation
             annotationView.accessibilityTraits.insert(.button)
-    
+
             return annotationView
         }
     }
 }
 
-class PlaceAnnotation: NSObject, MKAnnotation {
+final class PlaceAnnotation: NSObject, MKAnnotation {
     let place: Place
     var coordinate: CLLocationCoordinate2D {
         place.coordinate

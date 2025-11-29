@@ -94,7 +94,7 @@ The app fetches locations from:
 
 The app features a modern, clean UI with:
 
-- **Map View** (default): Interactive map showing all locations as pins, including custom locations. Tap any pin to open Wikipedia.
+- **Map View** (default): Interactive map showing all locations as pins, including custom locations. Nearby pins are automatically grouped into clusters for better readability. Tap any pin to open Wikipedia.
 - **List View**: Card-style list of locations with location icons and coordinates. Custom locations appear at the end of the list.
 - **Toggle Bar**: Segmented control at the top to switch between Map and List views.
 - **Custom Location**: Enter coordinates to add a custom location that appears in both map and list views.
@@ -201,7 +201,7 @@ The app uses a clean, modern design with:
 - View state is managed using an enum-based `PlacesViewState` for clarity
 - Full accessibility support with VoiceOver labels, hints, and values
 - JSON supports locations with or without names
-- Map view uses MapKit with efficient annotation handling and accessibility
+- Map view uses MapKit with efficient annotation handling, automatic pin clustering for nearby locations
 - List view uses lazy loading for performance
 - All coordinate formatting centralized in `Place` model for consistency
 - All user-facing strings are localized
