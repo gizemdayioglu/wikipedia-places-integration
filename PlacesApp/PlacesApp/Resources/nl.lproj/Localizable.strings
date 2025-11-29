@@ -9,6 +9,7 @@
 "button.ok" = "OK";
 "button.add.custom.location" = "Aangepaste locatie toevoegen";
 "button.refresh" = "Vernieuwen";
+"button.retry" = "Opnieuw proberen";
 "form.enter.coordinates" = "Coördinaten Invoeren";
 "form.latitude" = "Breedtegraad";
 "form.longitude" = "Lengtegraad";
@@ -32,6 +33,8 @@
 "accessibility.no.places.found" = "Geen plaatsen gevonden.";
 "accessibility.refresh" = "Plaatsen vernieuwen";
 "accessibility.refresh.hint" = "Herlaadt de plaatsen";
+"accessibility.retry" = "Opnieuw proberen";
+"accessibility.retry.hint" = "Probeert de kaartlocaties opnieuw te laden";
 "place.location" = "Locatie";
 "place.location.coordinates" = "Locatie (%@, %@)";
 "place.latitude" = "Breedtegraad %@";

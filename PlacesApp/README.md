@@ -55,6 +55,7 @@ PlacesApp/
         ├── PlacesMapView.swift            # Map view component
         ├── PlaceRowView.swift              # Location row component
         ├── EmptyStateView.swift            # Empty state component
+        ├── ErrorStateView.swift            # Generic error state component
         └── CustomLocationView.swift        # Custom location input form
 ```
 
@@ -91,6 +92,7 @@ The app features a modern, clean UI with:
 - **Toggle Bar**: Segmented control at the top to switch between Map and List views.
 - **Custom Location**: Enter coordinates to add a custom location that appears in both map and list views.
 - **Empty State**: Friendly message when no locations are available.
+- **Error State**: Generic error view with retry button for network errors and other failures.
 - **Pull-to-Refresh**: Swipe down to reload locations in list view. Refresh button in toolbar for map view.
 - **Card Design**: Modern card-style rows with shadows and rounded corners.
 - **Consistent Theme**: Centralized color scheme for maintainability.
@@ -132,6 +134,7 @@ Test coverage includes:
 - `NetworkErrorTests`: Error descriptions and types, including decoding errors
 - `NetworkReachabilityTests`: Network connectivity checking
 - `PlaceRowViewTests`: Accessibility labels, values, and text generation
+- `ErrorStateViewTests`: Error state view component instantiation and retry action
 
 ### UI Tests
 
@@ -145,6 +148,10 @@ UI tests cover:
 - Custom location button opening the input form
 - Entering and validating custom coordinates
 - Showing custom locations on both map and list views
+- Error state view visibility and retry button functionality (`ErrorStateUITests`)
+
+**UI Test Launch Arguments:**
+- `UITest_ErrorState`: Forces the app to display error state immediately on launch for testing error handling UI
 
 ## Swift Concurrency
 
@@ -155,7 +162,7 @@ The app uses modern Swift Concurrency:
 
 ## iOS Version Support
 
-The app supports iOS 15.0 and later, including iOS 15, 16, and 17. All features work across these versions without any version-specific code.
+The app supports iOS 15 and later. It uses a backward-compatible map implementation with MKMapView
 
 ## UI Design
 
@@ -172,6 +179,8 @@ The app uses a clean, modern design with:
 - Custom locations are automatically shown in both map and list views for consistency
 - The app checks network connectivity before making network requests using `NetworkReachability`
 - Network errors are handled with proper error types and localized error messages
+- Error states are displayed using a reusable `ErrorStateView` component with retry functionality
+- View state is managed using an enum-based `PlacesViewState` for clarity
 - Full accessibility support with VoiceOver labels, hints, and values
 - JSON supports locations with or without names
 - Map view uses MapKit with efficient annotation handling and accessibility

@@ -38,6 +38,10 @@ final class PlacesViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.places.first?.name, "Test Place")
         XCTAssertFalse(viewModel.isLoading)
         XCTAssertNil(viewModel.errorMessage)
+        guard case .loaded = viewModel.state else {
+            XCTFail("Expected .loaded state")
+            return
+        }
     }
     
     func testLoadPlaces_Error() async {
@@ -52,6 +56,11 @@ final class PlacesViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.places.isEmpty)
         XCTAssertFalse(viewModel.isLoading)
         XCTAssertNotNil(viewModel.errorMessage)
+        guard case .error(let message) = viewModel.state else {
+            XCTFail("Expected .error state")
+            return
+        }
+        XCTAssertFalse(message.isEmpty)
     }
     
     func testIsCustomLocationValid_ValidCoordinates() {
@@ -254,6 +263,164 @@ final class PlacesViewModelTests: XCTestCase {
         let allPlaces = viewModel.allPlaces
         XCTAssertEqual(allPlaces.count, 3)
         XCTAssertEqual(allPlaces.last?.name, "Custom Location")
+    }
+    
+    func testState_InitialStateIsLoading() {
+        // Then
+        guard case .loading = viewModel.state else {
+            XCTFail("Expected initial state to be .loading")
+            return
+        }
+        XCTAssertTrue(viewModel.isLoading)
+    }
+    
+    func testState_LoadPlacesSetsLoadingState() async {
+        // Given
+        mockRepository.delay = 0.05
+        mockRepository.places = [Place(id: "1", name: "Test", latitude: 52.3676, longitude: 4.9041)]
+        
+        // When
+        let task = Task {
+            await viewModel.loadPlaces()
+        }
+        
+        // Then - check state during loading
+        await Task.yield()
+        guard case .loading = viewModel.state else {
+            XCTFail("Expected .loading state during load")
+            return
+        }
+        
+        await task.value
+        
+        // After loading
+        guard case .loaded = viewModel.state else {
+            XCTFail("Expected .loaded state after successful load")
+            return
+        }
+    }
+    
+    func testState_LoadPlacesWithEmptyResultsSetsEmptyState() async {
+        // Given
+        mockRepository.places = []
+        
+        // When
+        await viewModel.loadPlaces()
+        
+        // Then
+        guard case .empty = viewModel.state else {
+            XCTFail("Expected .empty state when no places loaded")
+            return
+        }
+        XCTAssertFalse(viewModel.isLoading)
+        XCTAssertNil(viewModel.errorMessage)
+    }
+    
+    func testState_LoadPlacesWithErrorSetsErrorState() async {
+        // Given
+        mockRepository.shouldThrowError = true
+        mockRepository.error = NetworkError.invalidURL
+        
+        // When
+        await viewModel.loadPlaces()
+        
+        // Then
+        guard case .error(let message) = viewModel.state else {
+            XCTFail("Expected .error state when load fails")
+            return
+        }
+        XCTAssertFalse(message.isEmpty)
+        XCTAssertEqual(viewModel.errorMessage, message)
+        XCTAssertFalse(viewModel.isLoading)
+    }
+    
+    func testState_ShowCustomLocationUpdatesStateToLoaded() async {
+        // Given
+        mockRepository.places = []
+        await viewModel.loadPlaces()
+        
+        // Verify empty state
+        guard case .empty = viewModel.state else {
+            XCTFail("Expected .empty state")
+            return
+        }
+        
+        // When
+        viewModel.customLatitude = "52.3676"
+        viewModel.customLongitude = "4.9041"
+        viewModel.showCustomLocationOnMap()
+        
+        // Then
+        guard case .loaded = viewModel.state else {
+            XCTFail("Expected .loaded state after adding custom location")
+            return
+        }
+    }
+    
+    func testState_ClearCustomLocationUpdatesStateToEmpty() async {
+        // Given
+        mockRepository.places = []
+        await viewModel.loadPlaces()
+        
+        viewModel.customLatitude = "52.3676"
+        viewModel.customLongitude = "4.9041"
+        viewModel.showCustomLocationOnMap()
+        
+        // Verify loaded state
+        guard case .loaded = viewModel.state else {
+            XCTFail("Expected .loaded state")
+            return
+        }
+        
+        // When
+        viewModel.clearCustomLocation()
+        
+        // Then
+        guard case .empty = viewModel.state else {
+            XCTFail("Expected .empty state after clearing custom location")
+            return
+        }
+    }
+    
+    func testState_IsLoadingComputedProperty() {
+        // Given
+        viewModel.state = .loading
+        
+        // Then
+        XCTAssertTrue(viewModel.isLoading)
+        
+        // When
+        viewModel.state = .loaded
+        
+        // Then
+        XCTAssertFalse(viewModel.isLoading)
+        
+        // When
+        viewModel.state = .error("Test error")
+        
+        // Then
+        XCTAssertFalse(viewModel.isLoading)
+    }
+    
+    func testState_ErrorMessageComputedProperty() {
+        // Given
+        let errorMessage = "Test error message"
+        viewModel.state = .error(errorMessage)
+        
+        // Then
+        XCTAssertEqual(viewModel.errorMessage, errorMessage)
+        
+        // When
+        viewModel.state = .loaded
+        
+        // Then
+        XCTAssertNil(viewModel.errorMessage)
+        
+        // When
+        viewModel.state = .empty
+        
+        // Then
+        XCTAssertNil(viewModel.errorMessage)
     }
 }
 

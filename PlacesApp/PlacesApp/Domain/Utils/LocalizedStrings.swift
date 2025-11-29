@@ -40,6 +40,8 @@ enum LocalizedStrings {
     static let accessibilityNoPlacesFound = NSLocalizedString("accessibility.no.places.found", comment: "No places found accessibility label")
     static let accessibilityRefresh = NSLocalizedString("accessibility.refresh", comment: "Refresh button accessibility label")
     static let accessibilityRefreshHint = NSLocalizedString("accessibility.refresh.hint", comment: "Refresh button accessibility hint")
+    static let accessibilityRetry = NSLocalizedString("accessibility.retry", comment: "Retry button accessibility label")
+    static let accessibilityRetryHint = NSLocalizedString("accessibility.retry.hint", comment: "Retry button accessibility hint")
     
     static let location = NSLocalizedString("place.location", comment: "Location label for places without name")
     static let customLocationName = NSLocalizedString("place.custom.location.name", comment: "Custom location name")

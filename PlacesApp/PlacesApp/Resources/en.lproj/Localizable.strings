@@ -9,6 +9,7 @@
 "button.ok" = "OK";
 "button.add.custom.location" = "Add custom location";
 "button.refresh" = "Refresh";
+"button.retry" = "Retry";
 "form.enter.coordinates" = "Enter Coordinates";
 "form.latitude" = "Latitude";
 "form.longitude" = "Longitude";
@@ -32,6 +33,8 @@
 "accessibility.no.places.found" = "No places found.";
 "accessibility.refresh" = "Refresh locations";
 "accessibility.refresh.hint" = "Reloads the places";
+"accessibility.retry" = "Retry";
+"accessibility.retry.hint" = "Attempts to load the map locations again";
 "place.location" = "Location";
 "place.location.coordinates" = "Location (%@, %@)";
 "place.latitude" = "Latitude %@";

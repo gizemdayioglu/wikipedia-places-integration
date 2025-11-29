@@ -26,10 +26,15 @@ struct PlacesListView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .navigationTitle("places.title")
+            .onAppear {
+                if ProcessInfo.processInfo.arguments.contains("UITest_ErrorState") {
+                    viewModel.state = .error(ErrorMessages.noInternetConnection)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
-                        if viewMode == .map {
+                        if viewMode == .map || viewModel.allPlaces.isEmpty {
                             refreshButton
                         }
                         addCustomLocationButton
@@ -43,19 +48,18 @@ struct PlacesListView: View {
             .alert("message.error", isPresented: $showError, presenting: viewModel.errorMessage) { _ in
                 Button("button.ok") {
                     showError = false
-                    viewModel.errorMessage = nil
                 }
                 .accessibilityIdentifier("ErrorAlertOKButton")
-            } message: { _ in
-                if let msg = viewModel.errorMessage {
-                    Text(msg)
-                }
+            } message: { message in
+                Text(message)
             }
             .refreshable {
                 await viewModel.loadPlaces()
             }
             .task {
-                await viewModel.loadPlaces()
+                if !ProcessInfo.processInfo.arguments.contains("UITest_ErrorState") {
+                    await viewModel.loadPlaces()
+                }
             }
             .onChange(of: viewModel.shouldShowCustomLocationOnMap) { shouldShow in
                 if shouldShow {
@@ -70,14 +74,19 @@ struct PlacesListView: View {
 private extension PlacesListView {
     @ViewBuilder
     var contentView: some View {
-        if viewModel.isLoading {
+        switch viewModel.state {
+        case .loading:
             loadingView
-        } else if viewModel.allPlaces.isEmpty {
+        case .error(let message):
+            errorView(message: message)
+        case .empty:
             emptyView
-        } else if viewMode == .map {
-            mapView
-        } else {
-            listView
+        case .loaded:
+            if viewMode == .map {
+                mapView
+            } else {
+                listView
+            }
         }
     }
 }
@@ -109,6 +118,14 @@ private extension PlacesListView {
     var emptyView: some View {
         EmptyStateView()
             .accessibilityIdentifier("EmptyStateView")
+    }
+    
+    func errorView(message: String) -> some View {
+        ErrorStateView(message: message) {
+            Task {
+                await viewModel.loadPlaces()
+            }
+        }
     }
     
     var mapView: some View {
@@ -167,10 +184,9 @@ private extension PlacesListView {
         
         UIApplication.shared.open(url) { success in
             if !success {
-                viewModel.errorMessage = ErrorMessages.wikipediaAppNotInstalled
-                   showError = true
+                viewModel.state = .error(ErrorMessages.wikipediaAppNotInstalled)
+                showError = true
             }
         }
     }
 }
-

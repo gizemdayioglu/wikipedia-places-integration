@@ -1,11 +1,17 @@
 import Foundation
 import SwiftUI
 
+enum PlacesViewState {
+    case loading
+    case error(String)
+    case empty
+    case loaded
+}
+
 @MainActor
 final class PlacesViewModel: ObservableObject {
     @Published var places: [Place] = []
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+    @Published var state: PlacesViewState = .loading
     @Published var customLatitude: String = ""
     @Published var customLongitude: String = ""
     @Published var customLocation: Place?
@@ -22,18 +28,39 @@ final class PlacesViewModel: ObservableObject {
         self.createCustomLocationUseCase = createCustomLocationUseCase
     }
     
+    var isLoading: Bool {
+        if case .loading = state {
+            return true
+        }
+        return false
+    }
+    
+    var errorMessage: String? {
+        if case .error(let message) = state {
+            return message
+        }
+        return nil
+    }
+    
     func loadPlaces() async {
-        isLoading = true
-        errorMessage = nil
+        state = .loading
         
         do {
             let results = try await getLocationsUseCase.execute()
             self.places = results
+            
+            updateState()
         } catch {
-            errorMessage = error.localizedDescription
+            state = .error(error.localizedDescription)
         }
-        
-        isLoading = false
+    }
+    
+    private func updateState() {
+        if allPlaces.isEmpty {
+            state = .empty
+        } else {
+            state = .loaded
+        }
     }
     
     private var parsedCoordinates: (lat: Double, lon: Double)? {
@@ -58,6 +85,7 @@ final class PlacesViewModel: ObservableObject {
         guard let location = createCustomLocation() else { return }
         customLocation = location
         shouldShowCustomLocationOnMap = true
+        updateState()
     }
     
     func clearCustomLocation() {
@@ -65,6 +93,7 @@ final class PlacesViewModel: ObservableObject {
         shouldShowCustomLocationOnMap = false
         customLatitude = ""
         customLongitude = ""
+        updateState()
     }
     
     var allPlaces: [Place] {
