@@ -131,7 +131,7 @@ Test coverage includes:
 - `PlaceDecodingTests`: JSON decoding for Place and PlacesResponse
 - `NetworkErrorTests`: Error descriptions and types, including decoding errors
 - `NetworkReachabilityTests`: Network connectivity checking
-- `PlaceAccessibilityTests`: Accessibility labels, values, and text generation
+- `PlaceRowViewTests`: Accessibility labels, values, and text generation
 
 ### UI Tests
 
