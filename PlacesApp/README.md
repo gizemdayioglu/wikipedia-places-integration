@@ -139,12 +139,12 @@ Run UI tests by selecting the PlacesApp scheme and pressing `Cmd+U` (runs both u
 - In Xcode: Product → Test, or use the Test Navigator (Cmd+6) to run individual UI tests
 
 UI tests cover:
-- Places list loading
-- Map and list view toggling
-- Pull-to-refresh functionality
-- Tapping locations (both map pins and list items)
-- Custom location input and validation
-- Showing custom locations in both map and list views
+- Loading and displaying the places list
+- Switching between map and list views
+- Pull-to-refresh to reload locations
+- Custom location button opening the input form
+- Entering and validating custom coordinates
+- Showing custom locations on both map and list views
 
 ## Swift Concurrency
 
