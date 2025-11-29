@@ -68,6 +68,7 @@ struct PlacesMapView: UIViewRepresentable {
                 annotationView.isAccessibilityElement = true
                 annotationView.accessibilityTraits = [.button]
                 annotationView.accessibilityLabel = LocalizedStrings.locationsCount(cluster.memberAnnotations.count)
+                annotationView.accessibilityHint = LocalizedStrings.accessibilityOpenWikipediaLocation
 
                 return annotationView
             }

@@ -4,19 +4,23 @@ import XCTest
 final class PlacesNetworkServiceTests: XCTestCase {
     var service: PlacesNetworkService!
     var mockURLSession: MockURLSession!
+    var mockReachability: MockNetworkReachability!
     
     override func setUp() {
         super.setUp()
         mockURLSession = MockURLSession()
+        mockReachability = MockNetworkReachability(isConnected: true)
         service = PlacesNetworkService(
             baseURL: "https://example.com/locations.json",
-            urlSession: mockURLSession
+            urlSession: mockURLSession,
+            reachability: mockReachability
         )
     }
     
     override func tearDown() {
         service = nil
         mockURLSession = nil
+        mockReachability = nil
         super.tearDown()
     }
     
