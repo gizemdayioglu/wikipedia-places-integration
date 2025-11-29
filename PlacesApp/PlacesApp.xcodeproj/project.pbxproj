@@ -41,6 +41,10 @@
 		E989EFE32EDB798200219D20 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFE22EDB798200219D20 /* ErrorStateView.swift */; };
 		E989EFE52EDB813B00219D20 /* ErrorStateViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFE42EDB813B00219D20 /* ErrorStateViewTests.swift */; };
 		E989EFE72EDB846A00219D20 /* ErrorStateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFE62EDB846A00219D20 /* ErrorStateUITests.swift */; };
+		E989EFED2EDB8DC900219D20 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFE92EDB8DC900219D20 /* MockNetworkService.swift */; };
+		E989EFEE2EDB8DC900219D20 /* MockPlacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFEA2EDB8DC900219D20 /* MockPlacesRepository.swift */; };
+		E989EFEF2EDB8DC900219D20 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFEB2EDB8DC900219D20 /* MockURLSession.swift */; };
+		E989EFF02EDB8DC900219D20 /* MockNetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989EFE82EDB8DC900219D20 /* MockNetworkReachability.swift */; };
 		EB51E57A03D628A5EF2EBA08 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316F06D9ABD569E88D28C776 /* EmptyStateView.swift */; };
 		EC8296067481867783B22EBC /* MapRegionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239ADE9C8A097B9E89C1C85 /* MapRegionCalculator.swift */; };
 		F9EA850B26E962590C1C6DA3 /* CreateCustomLocationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47F84B3F4A5B2EF756C30B4 /* CreateCustomLocationUseCaseTests.swift */; };
@@ -105,6 +109,10 @@
 		E989EFE22EDB798200219D20 /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
 		E989EFE42EDB813B00219D20 /* ErrorStateViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateViewTests.swift; sourceTree = "<group>"; };
 		E989EFE62EDB846A00219D20 /* ErrorStateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateUITests.swift; sourceTree = "<group>"; };
+		E989EFE82EDB8DC900219D20 /* MockNetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkReachability.swift; sourceTree = "<group>"; };
+		E989EFE92EDB8DC900219D20 /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
+		E989EFEA2EDB8DC900219D20 /* MockPlacesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlacesRepository.swift; sourceTree = "<group>"; };
+		E989EFEB2EDB8DC900219D20 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		FAE8E9A433F4FA5DB0557DCB /* PlacesAppUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC634E308F3F2BA0211978BC /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +182,7 @@
 		6B1FFBFD7CD40E9789118D75 /* PlacesAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				E989EFEC2EDB8DC900219D20 /* Mocks */,
 				A8AC9D8E5E951AB3A01F3E08 /* Data */,
 				2354C043FEA0F84D74B01A74 /* Domain */,
 				ECC18F50BDF9F6F10909D904 /* Presentation */,
@@ -300,6 +309,17 @@
 				C9F7E4A870435BD50EDE77BE /* PlacesAppUITests.swift */,
 			);
 			path = PlacesAppUITests;
+			sourceTree = "<group>";
+		};
+		E989EFEC2EDB8DC900219D20 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E989EFE82EDB8DC900219D20 /* MockNetworkReachability.swift */,
+				E989EFE92EDB8DC900219D20 /* MockNetworkService.swift */,
+				E989EFEA2EDB8DC900219D20 /* MockPlacesRepository.swift */,
+				E989EFEB2EDB8DC900219D20 /* MockURLSession.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		ECC18F50BDF9F6F10909D904 /* Presentation */ = {
@@ -457,6 +477,10 @@
 				1CCE67F86E00A271399DE503 /* NetworkReachabilityTests.swift in Sources */,
 				9167F5709E89D853EE6BD0B2 /* PlaceDecodingTests.swift in Sources */,
 				E989EFE52EDB813B00219D20 /* ErrorStateViewTests.swift in Sources */,
+				E989EFED2EDB8DC900219D20 /* MockNetworkService.swift in Sources */,
+				E989EFEE2EDB8DC900219D20 /* MockPlacesRepository.swift in Sources */,
+				E989EFEF2EDB8DC900219D20 /* MockURLSession.swift in Sources */,
+				E989EFF02EDB8DC900219D20 /* MockNetworkReachability.swift in Sources */,
 				1B3AA27E9995DCDC43C93A18 /* PlaceModelTests.swift in Sources */,
 				B9A53B8A666CDBEA0EC60A39 /* PlaceRowViewTests.swift in Sources */,
 				04DDEC37CFDC6213A3C2C404 /* PlacesNetworkServiceTests.swift in Sources */,

@@ -49,17 +49,3 @@ final class GetLocationsUseCaseTests: XCTestCase {
     }
 }
 
-// MARK: - Mock Repository for Use Case Tests
-final class MockPlacesRepositoryForUseCase: PlacesRepositoryProtocol {
-    var places: [Place] = []
-    var shouldThrowError = false
-    var error: Error?
-    
-    func getLocations() async throws -> [Place] {
-        if shouldThrowError {
-            throw error ?? NetworkError.invalidURL
-        }
-        return places
-    }
-}
-

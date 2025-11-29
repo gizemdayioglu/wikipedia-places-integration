@@ -122,6 +122,10 @@ Examples:
 
 ### Unit Tests
 
+**Test Structure:**
+- Tests are organized by layer: `Data/`, `Domain/`, `Presentation/`, `Utils/`
+- All mock classes are centralized in `Mocks/` folder for easy discovery and reuse
+
 Test coverage includes:
 - `PlacesViewModelTests`: ViewModel logic, validation, edge cases, custom location creation, and data consistency between map/list views
 - `GetLocationsUseCaseTests`: Use case execution and error handling

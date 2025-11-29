@@ -25,11 +25,4 @@ final class NetworkReachabilityTests: XCTestCase {
         XCTAssertTrue(isConnected)
     }
 }
-final class MockNetworkReachability: NetworkReachabilityProtocol {
-    let isConnected: Bool
-    
-    init(isConnected: Bool) {
-        self.isConnected = isConnected
-    }
-}
 
