@@ -24,7 +24,8 @@ The app follows Clean Architecture with clear layer:
 ```
 PlacesApp/
 ├── Application/
-│   └── DependencyContainer.swift          # Dependency injection container
+│   ├── DependencyContainer.swift          # Dependency injection container
+│   └── TestDependencyContainer.swift     # Test dependency container with mock data
 ├── Domain/
 │   ├── Models/
 │   │   └── Place.swift                    # Domain model with formatting methods
@@ -46,6 +47,12 @@ PlacesApp/
 │   │   └── PlacesNetworkService.swift     # Network service with configurable URL
 │   └── Repositories/
 │       └── PlacesRepository.swift         # Repository implementation
+├── Resources/
+│   ├── mock_locations.json                # Mock data for UI tests
+│   ├── en.lproj/
+│   │   └── Localizable.strings           # English localizations
+│   └── nl.lproj/
+│       └── Localizable.strings           # Dutch localizations
 └── Presentation/
     ├── Theme.swift                         # App theme and colors
     ├── ViewModels/
@@ -145,6 +152,12 @@ Test coverage includes:
 Run UI tests by selecting the PlacesApp scheme and pressing `Cmd+U` (runs both unit and UI tests), or run only UI tests:
 - In Xcode: Product → Test, or use the Test Navigator (Cmd+6) to run individual UI tests
 
+**UI Test Structure:**
+- `PlacesAppUITests`: Main UI tests for user flows
+- `AccessibilityUITests`: Accessibility testing for all views
+- `ErrorStateUITests`: Error state view and retry functionality
+- `XCUIElement+Extensions.swift`: Shared extension with `waitForVisible` helper for reliable element waiting
+
 UI tests cover:
 - Loading and displaying the places list
 - Switching between map and list views
@@ -155,6 +168,7 @@ UI tests cover:
 - Error state view visibility and retry button functionality (`ErrorStateUITests`)
 
 **UI Test Launch Arguments:**
+- `UITest_MockData`: Uses mock data from `mock_locations.json` instead of network requests, making tests independent of network connectivity
 - `UITest_ErrorState`: Forces the app to display error state immediately on launch for testing error handling UI
 
 ## Swift Concurrency
@@ -191,3 +205,5 @@ The app uses a clean, modern design with:
 - List view uses lazy loading for performance
 - All coordinate formatting centralized in `Place` model for consistency
 - All user-facing strings are localized
+- UI tests use mock data from `mock_locations.json` to run independently of network connectivity
+- `TestDependencyContainer` provides mock network services and data for UI testing
