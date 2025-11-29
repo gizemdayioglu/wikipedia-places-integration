@@ -136,6 +136,7 @@ private extension PlacesListView {
             openWikipedia(for: place)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea(.container, edges: .bottom)
         .accessibilityIdentifier("PlacesMapView")
     }
     
