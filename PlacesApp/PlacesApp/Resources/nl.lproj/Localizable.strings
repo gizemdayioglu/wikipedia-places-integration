@@ -8,6 +8,7 @@
 "button.done" = "Klaar";
 "button.ok" = "OK";
 "button.add.custom.location" = "Aangepaste locatie toevoegen";
+"button.refresh" = "Vernieuwen";
 "form.enter.coordinates" = "Coördinaten Invoeren";
 "form.latitude" = "Breedtegraad";
 "form.longitude" = "Lengtegraad";
@@ -29,6 +30,8 @@
 "accessibility.open.wikipedia" = "Opent details over deze locatie op Wikipedia";
 "accessibility.open.wikipedia.location" = "Opent Wikipedia op deze locatie";
 "accessibility.no.places.found" = "Geen plaatsen gevonden.";
+"accessibility.refresh" = "Plaatsen vernieuwen";
+"accessibility.refresh.hint" = "Herlaadt de plaatsen";
 "place.location" = "Locatie";
 "place.location.coordinates" = "Locatie (%@, %@)";
 "place.latitude" = "Breedtegraad %@";

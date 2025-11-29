@@ -91,7 +91,7 @@ The app features a modern, clean UI with:
 - **Toggle Bar**: Segmented control at the top to switch between Map and List views.
 - **Custom Location**: Enter coordinates to add a custom location that appears in both map and list views.
 - **Empty State**: Friendly message when no locations are available.
-- **Pull-to-Refresh**: Swipe down to reload locations.
+- **Pull-to-Refresh**: Swipe down to reload locations in list view. Refresh button in toolbar for map view.
 - **Card Design**: Modern card-style rows with shadows and rounded corners.
 - **Consistent Theme**: Centralized color scheme for maintainability.
 

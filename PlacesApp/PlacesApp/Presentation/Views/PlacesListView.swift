@@ -27,7 +27,14 @@ struct PlacesListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .navigationTitle("places.title")
             .toolbar {
-                addCustomLocationButton
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack {
+                        if viewMode == .map {
+                            refreshButton
+                        }
+                        addCustomLocationButton
+                    }
+                }
             }
             .sheet(isPresented: $showCustomLocation) {
                 CustomLocationView()
@@ -128,6 +135,18 @@ private extension PlacesListView {
         }
         .listStyle(.plain)
         .accessibilityLabel(LocalizedStrings.locationsCount(viewModel.allPlaces.count))
+    }
+    
+    var refreshButton: some View {
+        Button {
+            Task {
+                await viewModel.loadPlaces()
+            }
+        } label: {
+            Image(systemName: "arrow.clockwise")
+        }
+        .accessibilityLabel(LocalizedStrings.accessibilityRefresh)
+        .accessibilityHint(LocalizedStrings.accessibilityRefreshHint)
     }
     
     var addCustomLocationButton: some View {

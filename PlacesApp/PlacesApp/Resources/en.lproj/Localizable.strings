@@ -8,6 +8,7 @@
 "button.done" = "Done";
 "button.ok" = "OK";
 "button.add.custom.location" = "Add custom location";
+"button.refresh" = "Refresh";
 "form.enter.coordinates" = "Enter Coordinates";
 "form.latitude" = "Latitude";
 "form.longitude" = "Longitude";
@@ -29,6 +30,8 @@
 "accessibility.open.wikipedia" = "Opens details about this location on Wikipedia";
 "accessibility.open.wikipedia.location" = "Opens Wikipedia at this location";
 "accessibility.no.places.found" = "No places found.";
+"accessibility.refresh" = "Refresh locations";
+"accessibility.refresh.hint" = "Reloads the places";
 "place.location" = "Location";
 "place.location.coordinates" = "Location (%@, %@)";
 "place.latitude" = "Latitude %@";

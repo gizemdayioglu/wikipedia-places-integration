@@ -13,6 +13,7 @@ enum LocalizedStrings {
     static let done = NSLocalizedString("button.done", comment: "Done button")
     static let ok = NSLocalizedString("button.ok", comment: "OK button")
     static let addCustomLocation = NSLocalizedString("button.add.custom.location", comment: "Add custom location button")
+    static let refresh = NSLocalizedString("button.refresh", comment: "Refresh button")
     
     static let enterCoordinates = NSLocalizedString("form.enter.coordinates", comment: "Enter coordinates section header")
     static let latitude = NSLocalizedString("form.latitude", comment: "Latitude field label")
@@ -37,6 +38,8 @@ enum LocalizedStrings {
     static let accessibilityOpenWikipedia = NSLocalizedString("accessibility.open.wikipedia", comment: "Open Wikipedia accessibility hint")
     static let accessibilityOpenWikipediaLocation = NSLocalizedString("accessibility.open.wikipedia.location", comment: "Open Wikipedia at location accessibility hint")
     static let accessibilityNoPlacesFound = NSLocalizedString("accessibility.no.places.found", comment: "No places found accessibility label")
+    static let accessibilityRefresh = NSLocalizedString("accessibility.refresh", comment: "Refresh button accessibility label")
+    static let accessibilityRefreshHint = NSLocalizedString("accessibility.refresh.hint", comment: "Refresh button accessibility hint")
     
     static let location = NSLocalizedString("place.location", comment: "Location label for places without name")
     static let customLocationName = NSLocalizedString("place.custom.location.name", comment: "Custom location name")
