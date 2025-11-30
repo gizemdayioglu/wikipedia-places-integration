@@ -16,7 +16,6 @@ struct PlacesListView: View {
     @EnvironmentObject var viewModel: PlacesViewModel
     @State private var showCustomLocation = false
     @State private var viewMode: ViewMode = .map
-    @State private var showError = false
     
     var body: some View {
         NavigationView {
@@ -44,14 +43,6 @@ struct PlacesListView: View {
             .sheet(isPresented: $showCustomLocation) {
                 CustomLocationView()
                     .environmentObject(viewModel)
-            }
-            .alert("message.error", isPresented: $showError, presenting: viewModel.errorMessage) { _ in
-                Button("button.ok") {
-                    showError = false
-                }
-                .accessibilityIdentifier("ErrorAlertOKButton")
-            } message: { message in
-                Text(message)
             }
             .refreshable {
                 await viewModel.loadPlaces()
@@ -186,7 +177,6 @@ private extension PlacesListView {
         UIApplication.shared.open(url) { success in
             if !success {
                 viewModel.state = .error(ErrorMessages.wikipediaAppNotInstalled)
-                showError = true
             }
         }
     }
