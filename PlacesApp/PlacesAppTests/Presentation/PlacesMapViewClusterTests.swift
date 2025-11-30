@@ -52,17 +52,21 @@ final class PlacesMapViewClusterTests: XCTestCase {
         ).makeCoordinator()
 
         // When
-        let view = coordinator.mapView(
+        guard let view = coordinator.mapView(
             mapView,
             viewFor: cluster
-        ) as? MKMarkerAnnotationView
+        ) as? MKMarkerAnnotationView else {
+            XCTFail("Expected MKMarkerAnnotationView for cluster")
+            return
+        }
 
         // Then
-        XCTAssertNotNil(view)
-        XCTAssertTrue(view!.isAccessibilityElement)
-        XCTAssertEqual(view!.accessibilityTraits, [.button])
-        XCTAssertNotNil(view!.accessibilityLabel)
-        XCTAssertNotNil(view!.accessibilityHint)
+        XCTAssertTrue(view.isAccessibilityElement)
+        XCTAssertTrue(view.accessibilityTraits.contains(.button))
+        XCTAssertNotNil(view.accessibilityLabel)
+        XCTAssertFalse(view.accessibilityLabel?.isEmpty ?? true)
+        XCTAssertNotNil(view.accessibilityHint)
+        XCTAssertFalse(view.accessibilityHint?.isEmpty ?? true)
     }
 
 }
