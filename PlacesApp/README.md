@@ -185,11 +185,11 @@ The app supports iOS 15 and later. It uses a backward-compatible map implementat
 ## UI Design
 
 The app uses a clean, modern design with:
-- Card-style rows with subtle shadows
-- Consistent color theme (blue accent)
-- Empty states for better UX
-- Native iOS segmented control for view switching
-- Full accessibility support with VoiceOver labels
+- Locations are shown in card-style rows
+- A simple color theme that fits well with iOS
+- A clear way to switch between map and list views
+- Easy-to-read empty and error states
+- VoiceOver support and accessibility labels included
 
 ## Notes
 
