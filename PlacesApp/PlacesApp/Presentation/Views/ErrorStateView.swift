@@ -12,15 +12,14 @@ struct ErrorStateView: View {
                 .accessibilityHidden(true)
             
             Text(message)
-                .font(.title3)
-                .fontWeight(.medium)
+                .font(.system(size: 20, weight: .medium))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
             
             Button(action: onRetry) {
                 Text("button.retry")
-                    .fontWeight(.semibold)
+                    .font(.system(size: 17, weight: .semibold))
             }
             .buttonStyle(.borderedProminent)
             .accessibilityLabel(LocalizedStrings.accessibilityRetry)

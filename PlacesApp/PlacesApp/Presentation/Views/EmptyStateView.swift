@@ -9,8 +9,7 @@ struct EmptyStateView: View {
                 .accessibilityHidden(true)
             
             Text("message.no.places.found")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundColor(.primary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

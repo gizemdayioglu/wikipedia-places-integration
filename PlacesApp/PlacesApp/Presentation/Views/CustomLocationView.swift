@@ -67,12 +67,9 @@ struct CustomLocationView: View {
     private var showLocationSection: some View {
         Section {
             Button(action: showOnMap) {
-                HStack {
-                    Spacer()
-                    Text("button.show.location")
-                        .fontWeight(.semibold)
-                    Spacer()
-                }
+                Text("button.show.location")
+                    .frame(maxWidth: .infinity)
+                    .font(.system(size: 17, weight: .semibold))
             }
             .disabled(!viewModel.isCustomLocationValid)
             .accessibilityIdentifier("ShowLocationButton")

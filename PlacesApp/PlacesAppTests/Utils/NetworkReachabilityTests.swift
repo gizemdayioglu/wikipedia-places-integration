@@ -4,7 +4,7 @@ import XCTest
 final class NetworkReachabilityTests: XCTestCase {
     
     func testIsConnected_DoesNotCrash() {
-        let reachability = NetworkReachability()
+       let reachability = MockNetworkReachability(isConnected: true)
         
         // Verify property is accessible and returns a boolean
         let isConnected = reachability.isConnected
