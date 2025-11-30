@@ -66,6 +66,16 @@ final class TestDependencyContainer: DependencyContainerProtocol {
     }()
     
     private init() {
+        if ProcessInfo.processInfo.arguments.contains("UITest_EmptyState") {
+            let emptyJSON = """
+            {
+              "locations": []
+            }
+            """
+            self.mockData = emptyJSON.data(using: .utf8) ?? Data()
+            return
+        }
+        
         let appBundle = Bundle(identifier: "com.places.app") ?? Bundle.main
         if let url = appBundle.url(forResource: "mock_locations", withExtension: "json"),
            let data = try? Data(contentsOf: url) {

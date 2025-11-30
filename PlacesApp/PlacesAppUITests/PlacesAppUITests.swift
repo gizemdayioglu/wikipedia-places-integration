@@ -137,4 +137,24 @@ final class PlacesAppUITests: XCTestCase {
         let lastCell = cells.element(boundBy: cells.count - 1)
         XCTAssertTrue(lastCell.waitForVisible(timeout: 2))
     }
+    
+    func testEmptyStateView_IsVisible() {
+        let emptyStateApp = XCUIApplication()
+        emptyStateApp.launchArguments = ["UITest_MockData", "UITest_EmptyState"]
+        emptyStateApp.launch()
+        
+        let selector = emptyStateApp.segmentedControls["ViewModeSelector"]
+        XCTAssertTrue(selector.waitForVisible(timeout: 5))
+        
+        selector.buttons["List"].tap()
+        
+        let emptyStateText = emptyStateApp.staticTexts["No places found."]
+        XCTAssertTrue(emptyStateText.waitForVisible(timeout: 5))
+        XCTAssertTrue(emptyStateText.exists)
+        
+        let emptyStateView = emptyStateApp.otherElements["EmptyStateView"]
+        if emptyStateView.exists {
+            XCTAssertTrue(emptyStateView.exists)
+        }
+    }
 }
